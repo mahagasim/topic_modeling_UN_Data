@@ -1,1 +1,1 @@
-You can find the dataset here in Kaggle: https://www.kaggle.com/datasets/unitednations/un-general-debates/data
+The dataset is available in Kaggle, you can find it in the following link: https://www.kaggle.com/datasets/unitednations/un-general-debates/data
