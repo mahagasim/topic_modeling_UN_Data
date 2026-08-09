@@ -1,81 +1,133 @@
 # UN General Debate NLP & Topic Modeling
 
-A reproducible natural-language-processing project using the **United Nations General Debate Corpus (UNGDC)** to study how themes in diplomatic speeches can be recovered with classical and embedding-based topic models.
+A reproducible natural-language-processing analysis of **United Nations General Debate (UNGD) speeches**, rebuilt from master's coursework into a research-oriented portfolio project.
 
-> **Status:** professional rebuild of an original master's coursework project. The repository remains private while the analysis is being cleaned and validated.
+<p align="center">
+  <img src="figures/workflow.svg" alt="Reproducible NLP workflow" width="100%">
+</p>
 
-## Project objective
+## Research objective
 
-The original coursework explored the UN General Debate corpus with exploratory text analysis, sentiment analysis, and three topic-modeling approaches:
+The project asks a descriptive measurement question:
 
-- Latent Dirichlet Allocation (LDA)
-- Non-negative Matrix Factorization (NMF)
-- BERTopic
+> **What recurring themes structure African countries' UN General Debate statements, and how do classical and embedding-based topic models represent those themes?**
 
-The clean rebuild focuses on making that workflow reproducible and portfolio-ready. The primary implemented analysis in the original notebook focuses on **African UN member-state speeches**, while the exploratory workflow also mapped speeches to continents and produced continent-level descriptive outputs.
+The workflow combines corpus diagnostics, sentiment measurement, and three unsupervised topic-modeling approaches: **Latent Dirichlet Allocation (LDA), Non-negative Matrix Factorization (NMF), and BERTopic**. It is descriptive NLP rather than causal inference.
+
+## At a glance
+
+| Item | Coursework analysis snapshot |
+|---|---:|
+| Full UNGD corpus | **7,507 speeches** |
+| Africa subset | **2,159 speeches** |
+| African country codes | **54** |
+| Coverage | **1970–2015** |
+| Median speech length, Africa | **2,749 words** |
+| Topic models | **LDA · NMF · BERTopic** |
+| Original Africa LDA `c_v` coherence | **0.3663** |
+
+The figures and observation counts on this page are grounded in the final coursework notebook and its processed Africa dataset. A separate coursework report used a different corpus snapshot; the reconciliation is documented in [`docs/methodology.md`](docs/methodology.md).
 
 ## Data
 
-The source corpus contains country-level General Debate statements with fields for country, session, year, and speech text. The original coursework used speeches spanning **1970-2015**.
+The corpus contains country-level General Debate statements with the core fields `country`, `session`, `year`, and `text`. The raw file is intentionally **not committed** because it is large; the repository rebuilds transformations from the public source instead of versioning duplicated data files.
 
-The raw corpus is not committed to this repository because it is large. See [`data/README.md`](data/README.md) for instructions and provenance.
+See [`data/README.md`](data/README.md) for the expected local file and source information.
 
-## Research workflow
+## Corpus diagnostics
 
-1. Load and validate the UNGD corpus.
-2. Map country codes to continents.
-3. Clean and normalize speech text.
-4. Explore speech counts and text-length distributions.
-5. Estimate sentiment as a descriptive NLP feature.
-6. Estimate topic models with LDA, NMF, and BERTopic.
-7. Compare topic interpretability and coherence.
-8. Export reproducible figures and model summaries.
+<p align="center">
+  <img src="figures/africa_speeches_over_time.svg" alt="African UN General Debate speeches over time" width="95%">
+</p>
 
-## Methods
+The available Africa sample expands substantially over the period. This pattern should not be interpreted mechanically as a behavioral change in diplomatic participation: UN membership and corpus coverage also change over time.
+
+<p align="center">
+  <img src="figures/speech_length_distribution.svg" alt="Distribution of words per African UN General Debate speech" width="95%">
+</p>
+
+Speech length is heterogeneous, with a median of **2,749 words** in the processed Africa sample. This matters computationally because long diplomatic statements can dominate vocabulary counts and make preprocessing decisions consequential.
+
+## Topic modeling
 
 ### LDA
 
-The original implementation used Gensim LDA with 10 topics, filtered vocabulary, 50 passes, and a fixed random seed. Its recorded c_v coherence score was **0.3663** for the Africa-focused analysis.
+The original Africa analysis estimated a **10-topic Gensim LDA model** with vocabulary filtering, **50 passes**, and `random_state=0`. Its recorded `c_v` coherence was **0.3663**.
+
+<p align="center">
+  <img src="figures/lda_topic_prevalence.svg" alt="Mean prevalence of the ten LDA topics" width="95%">
+</p>
+
+The figure reports mean document-level topic probability from the original run and shows the leading words rather than imposing ex-post substantive labels. In that model, Topics 4 and 3 carry the largest average prevalence, while Topic 7 contains terms such as `goals`, `mdgs`, and `governance`. Substantive topic labels should be assigned only after inspecting representative speeches.
 
 ### NMF
 
-NMF was estimated from a TF-IDF document-term matrix with 10 components. The rebuilt code separates vectorization, model fitting, and topic extraction so the model can be evaluated consistently with LDA and BERTopic.
+NMF is estimated on a **TF-IDF document-term matrix** with 10 components. The rebuild separates vectorization, estimation, topic-word extraction, and coherence calculation so the procedure is transparent and reusable.
 
 ### BERTopic
 
-The original workflow used BERTopic with sentence-transformer embeddings and n-grams. The rebuild preserves the method but removes Colab-specific setup and separates preprocessing from model estimation.
+BERTopic provides an embedding-based comparison to the bag-of-words models. Because it has a heavier dependency stack, it is imported lazily and is **optional by default** in the clean notebook. The rebuild evaluates extracted topic words against a common tokenized reference corpus rather than treating incomparable coherence calculations as a model ranking.
 
-## Repository structure
+## Sentiment analysis
+
+The original coursework included VADER sentiment analysis. During the rebuild, I identified that sentence tokenization had been applied after speeches were reduced to individual tokens, so the original sentiment figure is **not presented as a validated result** here. [`src/sentiment.py`](src/sentiment.py) corrects the unit of analysis by scoring sentence-like units from the original speech text and aggregating them to the speech level.
+
+This is an example of the purpose of the rebuild: preserve the analytical idea while making the implementation methodologically defensible.
+
+## Reproducible project structure
 
 ```text
 .
 ├── data/
 │   └── README.md
+├── docs/
+│   └── methodology.md
+├── figures/
+│   ├── africa_speeches_over_time.svg
+│   ├── lda_topic_prevalence.svg
+│   ├── speech_length_distribution.svg
+│   └── workflow.svg
+├── notebooks/
+│   └── 01_africa_ungd_nlp.ipynb
 ├── src/
 │   ├── preprocessing.py
-│   └── topic_models.py
+│   ├── sentiment.py
+│   ├── topic_models.py
+│   └── visualization.py
 ├── .gitignore
 ├── requirements.txt
 └── README.md
 ```
 
-A cleaned notebook will be added after the core functions are validated against the original coursework outputs.
+## Reproduce the analysis
 
-## Reproducibility principles
+```bash
+python -m venv .venv
+pip install -r requirements.txt
+python -m nltk.downloader punkt stopwords wordnet
+```
 
-- Raw and processed datasets are excluded from Git history.
-- File paths are relative rather than hard-coded to Google Drive.
-- Random states are set where supported.
-- Preprocessing and model estimation are implemented as reusable functions.
-- Network analysis is intentionally excluded from this repository and treated as a separate project.
+Then place the public UNGD CSV at:
 
-## Original coursework vs. rebuild
+```text
+data/un-general-debates.csv
+```
 
-The original notebooks were exploratory and contained repeated imports, notebook-specific installation commands, absolute Google Drive paths, intermediate output, and multiple NLP tasks in one file. This rebuild keeps the analytical substance while reorganizing the project into a clearer research pipeline suitable for review by researchers or technical hiring committees.
+and run [`notebooks/01_africa_ungd_nlp.ipynb`](notebooks/01_africa_ungd_nlp.ipynb).
 
-## Data source
+## What the professional rebuild improves
 
-The coursework used the public **UN General Debate Corpus** distributed through Kaggle / the UN General Debate dataset. Dataset files should be downloaded locally rather than committed to Git.
+- removes Colab-specific installation cells and absolute Google Drive paths;
+- constructs the Africa sample without chained-assignment side effects;
+- separates preprocessing, sentiment, modeling, and plotting into reusable modules;
+- corrects the sentiment unit of analysis;
+- makes coherence evaluation more comparable across topic models;
+- keeps BERTopic optional so classical models remain lightweight;
+- excludes large raw/processed datasets from Git history;
+- separates network analysis into its own project rather than mixing two analytical workflows;
+- documents discrepancies between coursework artifacts instead of silently reconciling them.
+
+For the full methodological audit, see [`docs/methodology.md`](docs/methodology.md).
 
 ## Author
 
