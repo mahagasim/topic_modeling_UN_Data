@@ -1,133 +1,289 @@
-# UN General Debate NLP & Topic Modeling
+# UN General Debate NLP & Machine Learning
 
-A reproducible natural-language-processing analysis of **United Nations General Debate (UNGD) speeches**, rebuilt from master's coursework into a research-oriented portfolio project.
+**Africa–Europe comparison with an Africa-focused topic-modeling and network-analysis extension**
 
-<p align="center">
-  <img src="figures/workflow.svg" alt="Reproducible NLP workflow" width="100%">
-</p>
+This repository consolidates two master's coursework submissions built from the **United Nations General Debate Corpus (UNGDC)** into one research-oriented NLP portfolio project.
 
-## Research objective
+The work developed in two stages:
 
-The project asks a descriptive measurement question:
+1. **Foundation — AI course:** compare African and European UN General Debate speeches using text similarity, topic modeling, clustering, supervised deep learning, sentiment analysis, and word clouds.
+2. **Extension — Social Media & Web Analytics:** narrow the focus to African speeches and deepen the analysis with LDA, NMF, BERTopic, sentiment evolution, sentiment-specific word clouds, and a country-mention network.
 
-> **What recurring themes structure African countries' UN General Debate statements, and how do classical and embedding-based topic models represent those themes?**
+The two submissions use the same underlying UNGD data and overlapping preprocessing ideas, so they are presented here as **one evolving project rather than two unrelated projects**.
 
-The workflow combines corpus diagnostics, sentiment measurement, and three unsupervised topic-modeling approaches: **Latent Dirichlet Allocation (LDA), Non-negative Matrix Factorization (NMF), and BERTopic**. It is descriptive NLP rather than causal inference.
+> **Reading note:** values described as *coursework-reported* reproduce the submitted analyses. The professional rebuild also documents implementation caveats and improves reproducibility instead of silently rewriting the original work.
 
-## At a glance
+---
 
-| Item | Coursework analysis snapshot |
+## Research questions
+
+### Part I — Africa vs Europe
+
+> **How similar are African and European UN General Debate speeches, which themes distinguish them, and how accurately can text alone classify a statement as African or European?**
+
+### Part II — Africa extension
+
+> **What themes, sentiment patterns, and country-to-country relationships characterize African participation in the UN General Debate?**
+
+---
+
+## Project at a glance
+
+| Component | AI course foundation | SMWA extension |
+|---|---|---|
+| Geographic focus | Africa vs Europe | Africa |
+| Exploratory NLP | ✓ | ✓ |
+| Regional word clouds | Africa + Europe | Africa |
+| TF-IDF / cosine similarity | ✓ | — |
+| LDA | Joint 10-topic model | ✓ |
+| K-means | 3 clusters | — |
+| LSTM classification | ✓ | — |
+| VADER sentiment | Africa vs Europe | Africa over time |
+| Positive/negative word clouds | Both continents | Africa |
+| NMF | — | ✓ |
+| BERTopic | — | ✓ |
+| Coherence comparison | — | LDA / NMF / BERTopic |
+| Country-mention network | — | ✓ |
+
+---
+
+# Part I — AI course foundation: Africa vs Europe
+
+The AI-course submission compares African and European statements after mapping UN country codes to continents and cleaning/tokenizing the speech text.
+
+## 1. Exploratory text analysis & regional word clouds
+
+The analysis compares speech-length distributions and visualizes high-frequency vocabulary separately for Africa and Europe. The submitted word clouds show extensive shared diplomatic vocabulary while preserving differences in relative word prominence.
+
+A course-specific figure inventory is available in [`coursework/FIGURE_INDEX.md`](coursework/FIGURE_INDEX.md), and the first archival figure sheet is stored under [`coursework/ai_course/figures/`](coursework/ai_course/figures/).
+
+## 2. TF-IDF and cosine similarity
+
+The submission converts the two regional corpora to TF-IDF representations and computes their cosine similarity.
+
+**Coursework-reported cosine similarity: `0.2640`.**
+
+The submitted interpretation is that African and European speeches share some common diplomatic language but retain substantial differences in vocabulary and emphasis.
+
+## 3. LDA topic comparison
+
+A joint **10-topic Gensim LDA model** is estimated with vocabulary filtering, `passes=50`, and `random_state=0`, then topic prevalence is compared between African and European speeches.
+
+The submitted interpretation highlights, among others:
+
+- post-colonialism, racism and African regional conflicts;
+- Kosovo, terrorism and Cold War-era European political themes;
+- health, food, MDGs and development;
+- governance, security and peacekeeping;
+- historical and geopolitical issues around Bosnia/Yugoslavia, Cyprus and related regional politics.
+
+These are source-derived interpretations of the original topic-word distributions; they are not causal claims.
+
+## 4. K-means clustering
+
+The AI project applies **K-means to TF-IDF features**. An elbow diagnostic is used to motivate **three clusters**, followed by cluster-size, continent-by-cluster, and cluster-word-cloud diagnostics.
+
+The clusters all retain core diplomatic language (`international`, `united`, `nations`, `development`, `peace`, `security`) but differ in the relative prominence of themes such as Africa, economic issues and human rights.
+
+## 5. LSTM continent classification
+
+The submission trains an LSTM to classify a speech as **Africa vs Europe** using tokenized/padded text sequences.
+
+Coursework specification:
+
+- 80/20 train-test split (`random_state=42`)
+- vocabulary size: 10,000
+- maximum sequence length: 100
+- embedding dimension: 100
+- LSTM units: 128
+- Adam optimizer, learning rate 0.001
+- batch size: 20
+- 10 epochs
+
+**Coursework-reported test accuracy: 85.1%** on 766 test speeches.
+
+| Class | Precision | Recall | F1 | Support |
+|---|---:|---:|---:|---:|
+| Europe | 0.86 | 0.90 | 0.88 | 452 |
+| Africa | 0.84 | 0.78 | 0.81 | 314 |
+
+The result shows that region is recoverable from textual patterns with meaningful but imperfect separation. It should not be read as evidence that either region has a single homogeneous discourse.
+
+## 6. Sentiment comparison & sentiment word clouds
+
+The AI submission compares VADER sentiment distributions and trends for Africa and Europe and builds four sentiment-specific word clouds:
+
+- positive — Africa;
+- negative — Africa;
+- positive — Europe;
+- negative — Europe.
+
+The submitted paper describes noticeably more negative African sentiment in parts of the 1970s to mid-1980s and changing patterns thereafter. Because the coursework contains more than one sentiment implementation, the professional code preserves the submitted outputs as provenance while using a corrected sentence-level implementation in [`src/sentiment.py`](src/sentiment.py).
+
+---
+
+# Part II — Social Media & Web Analytics extension: Africa deep dive
+
+The second submission uses the same UNGD corpus but turns the Africa component into a deeper standalone analysis. It is therefore treated as an **extension and specialization of Part I**.
+
+## 7. Africa corpus diagnostics & word cloud
+
+The submitted paper reports a right-skewed speech-length distribution and relatively consistent participation across UN sessions. Its Africa word cloud prominently features terms such as **United Nations**, **international community**, **developing country**, and **Security Council**.
+
+## 8. Africa sentiment over time
+
+The SMWA paper uses VADER sentiment and reports year-to-year fluctuations alongside a **gradual upward trend in sentiment** over 1970–2015.
+
+Its sentiment word clouds emphasize:
+
+- **positive:** peace, justice, people, hope and cooperation-related language;
+- **negative:** war, conflict, terrorism, poverty and violence.
+
+The professional sentiment implementation explicitly scores sentence-like units from original speech text; the submitted figures remain documented as coursework outputs.
+
+## 9. LDA, NMF & BERTopic
+
+The Africa extension compares three unsupervised topic-modeling approaches:
+
+- **LDA** — probabilistic bag-of-words topic model;
+- **NMF** — non-negative factorization of a TF-IDF document-term representation;
+- **BERTopic** — embedding-based topic discovery.
+
+The paper interprets the models as recovering themes around **regional conflict, health, colonial history, apartheid, sustainable development, human rights, international cooperation and development**.
+
+### Coursework-reported coherence scores
+
+| Model | `c_v` coherence reported in submission |
 |---|---:|
-| Full UNGD corpus | **7,507 speeches** |
-| Africa subset | **2,159 speeches** |
-| African country codes | **54** |
-| Coverage | **1970–2015** |
-| Median speech length, Africa | **2,749 words** |
-| Topic models | **LDA · NMF · BERTopic** |
-| Original Africa LDA `c_v` coherence | **0.3663** |
+| LDA | 0.3663 |
+| NMF | 0.5464 |
+| BERTopic | 0.7768 |
 
-The figures and observation counts on this page are grounded in the final coursework notebook and its processed Africa dataset. A separate coursework report used a different corpus snapshot; the reconciliation is documented in [`docs/methodology.md`](docs/methodology.md).
+The submitted paper ranks BERTopic highest on these values. The professional audit retains them as **coursework-reported diagnostics rather than an apples-to-apples benchmark**, because the original model sections did not construct their coherence reference corpora identically. See [`docs/methodology.md`](docs/methodology.md).
 
-## Data
+## 10. Country-mention network analysis
 
-The corpus contains country-level General Debate statements with the core fields `country`, `session`, `year`, and `text`. The raw file is intentionally **not committed** because it is large; the repository rebuilds transformations from the public source instead of versioning duplicated data files.
+The SMWA extension builds a directed weighted network in which African countries are nodes and references to other African countries create edges.
 
-See [`data/README.md`](data/README.md) for the expected local file and source information.
+Source-reported findings include:
 
-## Corpus diagnostics
+- **Madagascar** as a particularly central node;
+- important positions for **Namibia** and **Comoros**;
+- **Somalia** as notable in the network;
+- **South Sudan** appearing comparatively isolated;
+- regional groupings discussed around East African and West African countries.
 
-<p align="center">
-  <img src="figures/africa_speeches_over_time.svg" alt="African UN General Debate speeches over time" width="95%">
-</p>
+These are descriptive network patterns, not causal measures of diplomatic influence. The professional reconstruction in [`src/network_analysis.py`](src/network_analysis.py) makes the text-matching rule explicit and uses country names/common historical aliases rather than silently relying on ISO-code strings inside speech text.
 
-The available Africa sample expands substantially over the period. This pattern should not be interpreted mechanically as a behavioral change in diplomatic participation: UN membership and corpus coverage also change over time.
+---
 
-<p align="center">
-  <img src="figures/speech_length_distribution.svg" alt="Distribution of words per African UN General Debate speech" width="95%">
-</p>
-
-Speech length is heterogeneous, with a median of **2,749 words** in the processed Africa sample. This matters computationally because long diplomatic statements can dominate vocabulary counts and make preprocessing decisions consequential.
-
-## Topic modeling
-
-### LDA
-
-The original Africa analysis estimated a **10-topic Gensim LDA model** with vocabulary filtering, **50 passes**, and `random_state=0`. Its recorded `c_v` coherence was **0.3663**.
-
-<p align="center">
-  <img src="figures/lda_topic_prevalence.svg" alt="Mean prevalence of the ten LDA topics" width="95%">
-</p>
-
-The figure reports mean document-level topic probability from the original run and shows the leading words rather than imposing ex-post substantive labels. In that model, Topics 4 and 3 carry the largest average prevalence, while Topic 7 contains terms such as `goals`, `mdgs`, and `governance`. Substantive topic labels should be assigned only after inspecting representative speeches.
-
-### NMF
-
-NMF is estimated on a **TF-IDF document-term matrix** with 10 components. The rebuild separates vectorization, estimation, topic-word extraction, and coherence calculation so the procedure is transparent and reusable.
-
-### BERTopic
-
-BERTopic provides an embedding-based comparison to the bag-of-words models. Because it has a heavier dependency stack, it is imported lazily and is **optional by default** in the clean notebook. The rebuild evaluates extracted topic words against a common tokenized reference corpus rather than treating incomparable coherence calculations as a model ranking.
-
-## Sentiment analysis
-
-The original coursework included VADER sentiment analysis. During the rebuild, I identified that sentence tokenization had been applied after speeches were reduced to individual tokens, so the original sentiment figure is **not presented as a validated result** here. [`src/sentiment.py`](src/sentiment.py) corrects the unit of analysis by scoring sentence-like units from the original speech text and aggregating them to the speech level.
-
-This is an example of the purpose of the rebuild: preserve the analytical idea while making the implementation methodologically defensible.
-
-## Reproducible project structure
+# How the two courses fit together
 
 ```text
-.
-├── data/
-│   └── README.md
-├── docs/
-│   └── methodology.md
-├── figures/
-│   ├── africa_speeches_over_time.svg
-│   ├── lda_topic_prevalence.svg
-│   ├── speech_length_distribution.svg
-│   └── workflow.svg
-├── notebooks/
-│   └── 01_africa_ungd_nlp.ipynb
-├── src/
-│   ├── preprocessing.py
-│   ├── sentiment.py
-│   ├── topic_models.py
-│   └── visualization.py
-├── .gitignore
-├── requirements.txt
-└── README.md
+UN General Debate Corpus
+        |
+        v
+Shared cleaning + continent mapping
+        |
+        +------------------------------+
+        |                              |
+        v                              v
+PART I: AI COURSE                 PART II: SMWA EXTENSION
+Africa vs Europe                  Africa deep dive
+        |                              |
+TF-IDF similarity                 richer EDA
+LDA comparison                    VADER sentiment
+K-means                           LDA / NMF / BERTopic
+LSTM classification               coherence diagnostics
+sentiment comparison              country-mention network
+regional/sentiment word clouds    Africa/sentiment word clouds
 ```
 
-## Reproduce the analysis
+Part II is therefore best read as an **extension of Part I**, not as a duplicate project.
 
-```bash
-python -m venv .venv
-pip install -r requirements.txt
-python -m nltk.downloader punkt stopwords wordnet
-```
+---
 
-Then place the public UNGD CSV at:
+## Reproducible notebooks
+
+The professional rebuild now mirrors the analytical progression across both courses:
 
 ```text
-data/un-general-debates.csv
+notebooks/
+├── 01_africa_ungd_nlp.ipynb
+├── 02_africa_europe_ml.ipynb
+└── 03_africa_network_extension.ipynb
 ```
 
-and run [`notebooks/01_africa_ungd_nlp.ipynb`](notebooks/01_africa_ungd_nlp.ipynb).
+- `01_africa_ungd_nlp.ipynb` — Africa EDA, sentiment, LDA, NMF and optional BERTopic.
+- `02_africa_europe_ml.ipynb` — Africa/Europe word clouds, TF-IDF similarity, LDA specification, K-means, LSTM architecture and comparative sentiment.
+- `03_africa_network_extension.ipynb` — directed country-mention network and descriptive centrality.
+
+Reusable source modules:
+
+```text
+src/
+├── preprocessing.py
+├── comparative_analysis.py
+├── sentiment.py
+├── topic_models.py
+├── network_analysis.py
+└── visualization.py
+```
+
+Install the classical NLP stack with `requirements.txt`; install `requirements-ai.txt` when reproducing the TensorFlow/LSTM component.
+
+---
+
+# Coursework provenance
+
+The two courses remain explicitly separated under [`coursework/`](coursework/) so a reviewer can distinguish the original analytical contributions from the later professional reorganization:
+
+```text
+coursework/
+├── README.md
+├── STRUCTURE.md
+├── FIGURE_INDEX.md
+├── ai_course/
+│   ├── README.md
+│   └── figures/
+└── social_media_web_analytics/
+    └── README.md
+```
+
+The original submission PDFs and notebooks remain preserved in the user's coursework archive in Google Drive. Their substantive methods, reported metrics, figure inventory, and findings are reconciled here in [`docs/methodology.md`](docs/methodology.md) and [`docs/findings.md`](docs/findings.md).
+
+---
 
 ## What the professional rebuild improves
 
-- removes Colab-specific installation cells and absolute Google Drive paths;
-- constructs the Africa sample without chained-assignment side effects;
-- separates preprocessing, sentiment, modeling, and plotting into reusable modules;
-- corrects the sentiment unit of analysis;
-- makes coherence evaluation more comparable across topic models;
-- keeps BERTopic optional so classical models remain lightweight;
-- excludes large raw/processed datasets from Git history;
-- separates network analysis into its own project rather than mixing two analytical workflows;
-- documents discrepancies between coursework artifacts instead of silently reconciling them.
+- presents the two assignments as one coherent research progression;
+- removes Colab-specific paths and installation cells;
+- separates preprocessing, similarity/clustering, sentiment, topic models, network analysis and visualization into reusable functions;
+- makes random states explicit where supported;
+- corrects the sentiment unit of analysis for future reproduction;
+- makes topic-coherence comparison more defensible;
+- distinguishes submitted results from independently reproducible code;
+- documents the original network measurement and supplies a clearer name-based reconstruction;
+- excludes very large raw/processed datasets from Git history;
+- retains a complete course-specific figure inventory instead of mixing outputs without provenance.
 
-For the full methodological audit, see [`docs/methodology.md`](docs/methodology.md).
+For the full source audit, see [`docs/methodology.md`](docs/methodology.md). For the substantive findings, see [`docs/findings.md`](docs/findings.md).
+
+---
+
+## Data
+
+The project uses the public **United Nations General Debate Corpus**. Raw and processed data are intentionally excluded because the raw corpus is large and processed copies are redundant. See [`data/README.md`](data/README.md).
+
+The coursework artifacts do not describe the date coverage identically: the computational notebooks use **1970–2015**, while one submitted document describes the source through 2016. The discrepancy is documented rather than silently reconciled.
+
+---
+
+## Interpretation boundaries
+
+This is primarily a **descriptive NLP and machine-learning project**. Topic prevalence, sentiment, cosine similarity, cluster membership, classification accuracy and network centrality are measurements derived from text; they do not identify causal effects. Topic labels and substantive interpretations require inspection of high-weight words and representative speeches.
+
+---
 
 ## Author
 

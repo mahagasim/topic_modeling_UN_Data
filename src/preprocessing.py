@@ -12,6 +12,9 @@ from nltk.stem import SnowballStemmer, WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 
 
+# Country-code sets reproduce the continent choices made in the original
+# coursework mapping. In particular, Turkey was classified under Asia and is
+# therefore not included in the Europe sample.
 AFRICAN_COUNTRY_CODES = {
     "AGO", "BDI", "BEN", "BFA", "BWA", "CAF", "CIV", "CMR", "COD", "COG",
     "COM", "CPV", "DJI", "DZA", "EGY", "ERI", "ETH", "GAB", "GHA", "GIN",
@@ -19,6 +22,14 @@ AFRICAN_COUNTRY_CODES = {
     "MOZ", "MRT", "MUS", "MWI", "NAM", "NER", "NGA", "RWA", "SDN", "SEN",
     "SLE", "SOM", "SSD", "STP", "SWZ", "SYC", "TCD", "TGO", "TUN", "TZA",
     "UGA", "ZAF", "ZMB", "ZWE",
+}
+
+EUROPEAN_COUNTRY_CODES = {
+    "ALB", "AND", "AUT", "BEL", "BGR", "BIH", "BLR", "CHE", "CSK", "CYP",
+    "CZE", "DDR", "DEU", "DNK", "ESP", "EST", "EU", "FIN", "FRA", "GBR",
+    "GRC", "HRV", "HUN", "IRL", "ISL", "ITA", "LIE", "LTU", "LUX", "LVA",
+    "MCO", "MDA", "MKD", "MLT", "MNE", "NLD", "NOR", "POL", "PRT", "ROU",
+    "RUS", "SMR", "SVK", "SVN", "SWE", "UKR", "VAT", "YUG",
 }
 
 DEFAULT_EXTRA_STOPWORDS = {
@@ -42,10 +53,30 @@ def load_ungd(path: str) -> pd.DataFrame:
     return df
 
 
+def add_coursework_continent(df: pd.DataFrame) -> pd.DataFrame:
+    """Add Africa/Europe labels using the continent mapping from the coursework.
+
+    Countries outside the two focal regions receive ``None`` because the
+    professional comparative notebook only needs the Africa-Europe subset.
+    """
+    validate_columns(df)
+    out = df.copy()
+    out["Continent"] = None
+    out.loc[out["country"].isin(AFRICAN_COUNTRY_CODES), "Continent"] = "Africa"
+    out.loc[out["country"].isin(EUROPEAN_COUNTRY_CODES), "Continent"] = "Europe"
+    return out
+
+
 def filter_africa(df: pd.DataFrame) -> pd.DataFrame:
     """Return speeches from the 54 African country codes present in the coursework."""
     validate_columns(df)
     return df.loc[df["country"].isin(AFRICAN_COUNTRY_CODES)].copy()
+
+
+def filter_africa_europe(df: pd.DataFrame) -> pd.DataFrame:
+    """Return the Africa-Europe comparison sample used by the AI coursework."""
+    out = add_coursework_continent(df)
+    return out.loc[out["Continent"].notna()].copy()
 
 
 def clean_text(

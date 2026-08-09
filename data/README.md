@@ -1,6 +1,6 @@
 # Data
 
-This project uses the **United Nations General Debate Corpus (UNGDC)**.
+This combined project uses the **United Nations General Debate Corpus (UNGDC)**.
 
 ## Expected local file
 
@@ -10,14 +10,18 @@ Download the corpus and place the CSV in this directory as:
 data/un-general-debates.csv
 ```
 
-The original coursework used a CSV with the variables:
+The core variables used by both coursework projects are:
 
 - `country`
 - `session`
 - `year`
 - `text`
 
-The original files in Google Drive cover speeches from 1970 through 2015.
+The Africa/Europe country-code choices used in the original coursework are embedded in `src/preprocessing.py`, so no additional mapping spreadsheet is required for the professional notebooks.
+
+## Analysis window
+
+The final computational notebooks use speeches from **1970 through 2015**. One submitted document describes the source corpus as extending through 2016; this discrepancy is preserved in the provenance note rather than silently reconciled.
 
 ## Source
 
@@ -27,8 +31,8 @@ The dataset used in the coursework is publicly available through Kaggle:
 
 ## Why the data are not committed
 
-The raw CSV is approximately 135 MB and the processed spreadsheet versions are also large. They are intentionally excluded from Git history. The professional version of the project should regenerate processed data from the raw source using code rather than store duplicated transformed files.
+The raw CSV is approximately 135 MB and the processed spreadsheet versions are also large. They are intentionally excluded from Git history. The professional version regenerates processed variables from the raw source rather than storing duplicated intermediate copies.
 
 ## Original coursework artifacts
 
-The Drive archive contains several versions of the raw and processed data. These are retained as historical coursework artifacts, but they are not treated as canonical inputs for the rebuilt repository.
+Google Drive contains multiple raw/processed snapshots created during the two courses. They remain historical coursework artifacts and are useful for auditing submitted outputs, but the professional workflow treats code + a single raw corpus as the preferred reproducibility path.
