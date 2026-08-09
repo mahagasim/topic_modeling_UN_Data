@@ -1,0 +1,35 @@
+# Data
+/data/*.csv
+/data/*.xlsx
+/data/*.xls
+/data/*.parquet
+/data/*.zip
+!/data/README.md
+
+# Generated outputs
+/results/
+/figures/
+/models/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Secrets / local settings
+.env
+*.env
