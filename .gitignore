@@ -8,8 +8,8 @@
 
 # Generated outputs
 /results/
-/figures/
 /models/
+/figures/generated/
 
 # Python
 __pycache__/
