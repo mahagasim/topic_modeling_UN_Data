@@ -2,7 +2,7 @@
 
 This combined project uses the **United Nations General Debate Corpus (UNGDC)**.
 
-## Expected local files
+## Expected local file
 
 Download the corpus and place the CSV in this directory as:
 
@@ -17,13 +17,7 @@ The core variables used by both coursework projects are:
 - `year`
 - `text`
 
-For the Africa-Europe comparative notebook, also provide:
-
-```text
-data/country_continent.csv
-```
-
-with columns `country` (UN/ISO-style country code used by the corpus) and `Continent`. The original coursework created this mapping manually and reused it across both analyses.
+The Africa/Europe country-code choices used in the original coursework are embedded in `src/preprocessing.py`, so no additional mapping spreadsheet is required for the professional notebooks.
 
 ## Analysis window
 
