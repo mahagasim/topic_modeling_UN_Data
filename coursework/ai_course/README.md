@@ -1,6 +1,6 @@
-# AI course submission - Africa vs Europe
+# AI course submission — Africa vs Europe
 
-This folder preserves the original **Data Analytics and Artificial Intelligence (2023/24)** submission and its analytical outputs.
+This folder documents the original **Data Analytics and Artificial Intelligence (2023/24)** submission and its analytical outputs.
 
 ## Role in the combined project
 
@@ -16,4 +16,15 @@ This is the **foundation analysis**. It compares African and European UN General
 
 The original submission reports a TF-IDF cosine similarity of **0.2640** and an LSTM test accuracy of **85.1%** (766 test speeches; Europe precision/recall/F1 = 0.86/0.90/0.88, Africa = 0.84/0.78/0.81).
 
-The original PDF and notebook are included unchanged for provenance. The `figures/` directory contains the analytical figures extracted from the submitted PDF, with descriptive filenames.
+## Provenance
+
+The authoritative submitted PDF is **`AI Project_ Africa - Europe Project`** and the final source notebook is **`AI project_Africa - Europe.ipynb`** in the coursework Google Drive archive. They were read directly when reconstructing this repository.
+
+The GitHub project records their methods and findings in:
+
+- [`../../docs/methodology.md`](../../docs/methodology.md)
+- [`../../docs/findings.md`](../../docs/findings.md)
+- [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md)
+- [`../../notebooks/02_africa_europe_ml.ipynb`](../../notebooks/02_africa_europe_ml.ipynb)
+
+The `figures/` folder contains archival visual material from the submitted analysis; additional figures are indexed by their original analytical role in the figure index.
