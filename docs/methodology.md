@@ -1,48 +1,122 @@
 # Methodology and provenance
 
-This note documents how the professional rebuild was reconciled with the original coursework files. It is intentionally explicit about what is reproduced, what is corrected, and what should not be interpreted as a validated substantive finding.
+This note documents how the professional repository was reconciled with **two original coursework submissions built from the same United Nations General Debate corpus**.
 
-## Computational source of truth
+The goal is not to rewrite the coursework after the fact. The repository preserves the submitted analyses and figures while making clear which results are source-reported, which implementation choices need caution, and which parts were reorganized for reproducibility.
 
-The primary computational source is the final Google Colab notebook named **`Topic Modeling`** together with its processed Africa dataset. That notebook records:
+## Source hierarchy
 
-- 7,507 speeches in the full corpus;
-- coverage from 1970 through 2015;
-- 2,159 speeches in the Africa subset;
-- 54 African country codes;
-- LDA estimated with 10 topics, 50 passes, and `random_state=0`;
-- an original Africa LDA `c_v` coherence score of 0.3662893178.
+### Part I - AI course foundation
 
-A separate coursework PDF uses a different corpus snapshot and a pre/post-MDG framing. Because its observation count, date range, and evaluation setup do not match the final notebook, it is treated only as contextual documentation and is not used as the computational source for this repository.
+Authoritative source artifacts:
 
-## Changes made in the rebuild
+- submitted PDF: **`AI Project_ Africa - Europe Project`**;
+- final notebook: **`AI project_Africa - Europe.ipynb`**, last modified May 2024;
+- original graph archive associated with the final notebook.
 
-### 1. Portable project structure
+This submission is the foundation of the combined project and contains the Africa-Europe comparison: TF-IDF/cosine similarity, LDA, K-means, LSTM classification, VADER sentiment, and regional/sentiment word clouds.
 
-The original notebooks relied on Google Colab installation cells and absolute Google Drive paths. The rebuild uses relative paths and separates reusable code into `src/` modules.
+### Part II - Social Media & Web Analytics extension
 
-### 2. Safe sample construction
+Authoritative source artifacts:
 
-The Africa sample is created with `.loc[...].copy()` rather than mutating a filtered DataFrame view. This removes the `SettingWithCopyWarning` present in the exploratory notebook and makes the transformation explicit.
+- submitted paper: **`898396.pdf`**;
+- final notebook: **`Topic Modeling`**, last modified June 2024;
+- paper figures and model outputs.
 
-### 3. Sentiment-analysis unit corrected
+This submission is treated as an **Africa-focused extension** of the AI work. It adds a deeper Africa-only sentiment analysis, LDA/NMF/BERTopic comparison, coherence diagnostics, and country-mention network analysis.
 
-The original sentiment cell tokenized the speech first and subsequently applied sentence tokenization to each token. As a result, VADER was effectively scoring token-level units rather than complete sentences. The rebuild computes sentence-level VADER scores from the original speech text and aggregates them to the speech level. For this reason, the original sentiment plots are not presented as validated results in the public-facing README.
+## Shared data and overlapping snapshots
 
-### 4. Comparable topic-model evaluation
+Both projects use the public UN General Debate Corpus with the core variables `country`, `session`, `year`, and `text`.
 
-The original LDA, NMF, and BERTopic sections did not use exactly the same reference texts and dictionaries for coherence evaluation. In the rebuild, model topic-word lists can be evaluated with a common `c_v` reference corpus. The recorded LDA coherence of 0.3663 is retained as an **original-coursework diagnostic**, not as a claim that LDA is superior or inferior to the other models.
+The original coursework artifacts are not perfectly synchronized:
 
-### 5. BERTopic kept optional
+- the computational notebooks use a 1970-2015 analysis window;
+- one submitted AI document describes the source as extending through 2016;
+- intermediate processed files differ in size and construction.
 
-BERTopic has a heavier dependency stack and may download a sentence-transformer model at first run. Its import is therefore lazy and the clean notebook makes the BERTopic step optional. LDA and NMF can be reproduced without loading those dependencies.
+The rebuild therefore does **not** infer that every historical file is the same snapshot. It documents the discrepancy and uses code to reconstruct samples from a single local raw corpus whenever possible.
 
-## Interpretation boundaries
+## AI-course specifications retained from the source
 
-This project is descriptive NLP. Topic prevalence and sentiment are measurements derived from text and do not identify causal effects. Changes in the number of speeches over time can also reflect UN membership, corpus availability, and country coverage rather than a behavioral change in diplomatic participation.
+### TF-IDF cosine similarity
 
-Topic labels should be assigned only after inspecting high-weight terms and representative speeches. The README therefore reports the original top words and prevalence rather than imposing strong substantive labels that were not validated in the coursework.
+The submitted Africa-Europe comparison reports a cosine similarity of **0.2640** after TF-IDF vectorization. This is retained as a coursework result.
 
-## Reproducibility
+### LDA
 
-Raw and processed data are intentionally excluded from Git history. The public UN General Debate corpus should be downloaded locally and placed under `data/`. Generated outputs can be recreated from the notebook and functions in `src/`.
+The final AI notebook estimates a joint 10-topic Gensim LDA model with vocabulary filtering, `passes=50`, and `random_state=0`, then compares topic prevalence by continent.
+
+### K-means
+
+The AI notebook applies K-means to TF-IDF features, uses an elbow diagnostic, and proceeds with **three clusters**. The original cluster-distribution, continent-by-cluster heatmap, and cluster word clouds are preserved in the coursework archive.
+
+### LSTM
+
+The submitted classifier uses an 80/20 train-test split (`random_state=42`), a 10,000-word tokenizer vocabulary, sequence length 100, 100-dimensional embeddings, an LSTM layer with 128 units, Adam with learning rate 0.001, batch size 20, and 10 epochs.
+
+The submission reports **85.1% test accuracy** on 766 test observations. This is retained as a source-reported result; the professional rebuild does not claim that the result has been independently re-estimated under a fully seeded TensorFlow environment unless a new run is explicitly recorded.
+
+## Sentiment-analysis caveat
+
+The coursework contains more than one sentiment implementation.
+
+In the final AI notebook, one comparison routine operates on a preprocessed-text field, while a later routine returns to original speech text to identify strongest positive and negative sentences for the sentiment-specific word clouds.
+
+In the SMWA notebook, the original workflow tokenizes speech text and subsequently applies sentence tokenization in a way that can effectively change the intended unit of analysis. For that reason, the professional implementation in [`src/sentiment.py`](../src/sentiment.py) computes VADER scores from sentence-like units of the **original speech text** and aggregates them to the speech level.
+
+The original sentiment figures remain in the coursework archive because they are part of the submitted work, but they are labeled as **coursework outputs**, not silently presented as newly validated estimates.
+
+## Topic-model coherence caveat
+
+The SMWA submission reports:
+
+| Model | Coursework-reported `c_v` coherence |
+|---|---:|
+| LDA | 0.3663 |
+| NMF | 0.5464 |
+| BERTopic | 0.7768 |
+
+The submitted paper interprets BERTopic as the best-performing model on this comparison.
+
+However, the original LDA, NMF, and BERTopic sections do not construct the coherence reference texts/dictionaries in exactly the same way. The professional rebuild therefore preserves these numbers as **submitted diagnostics** while providing utilities to evaluate extracted topic words against a common reference corpus. This distinction prevents an inconsistent evaluation setup from being presented as a definitive model benchmark.
+
+## Topic interpretation
+
+Topic labels in both submissions are substantive interpretations of high-weight terms. The professional repository preserves those interpretations but does not treat them as ground truth. Robust topic interpretation should inspect:
+
+1. high-weight terms;
+2. representative speeches/documents;
+3. topic prevalence by group/time;
+4. stability across preprocessing/model specifications.
+
+## Network-analysis interpretation
+
+The SMWA submission builds a directed weighted country-mention network. Source-reported centrality and clustering patterns are descriptive properties of the constructed mention network. They should not be interpreted as causal diplomatic influence or formal alliance structure.
+
+## Changes made in the professional rebuild
+
+### Portable project structure
+
+The original notebooks rely on Colab installation cells and absolute Google Drive paths. Reusable code is moved into `src/` and local paths are documented under `data/`.
+
+### Safe sample construction
+
+Filtered samples are created explicitly with copies rather than relying on chained assignment.
+
+### Reusable model functions
+
+Preprocessing, sentiment measurement and topic-model estimation are separated into functions so assumptions are visible and easier to change.
+
+### Large data excluded
+
+Raw and processed datasets are intentionally not committed to Git. The public UNGD corpus should be downloaded locally; derived data should be regenerated from code.
+
+### Coursework preserved separately
+
+Original submissions, source notebooks and submitted figures are stored under `coursework/`, clearly separated by course. This preserves provenance while allowing the repository root to present one coherent research project.
+
+## Interpretation boundary
+
+This is a descriptive NLP and machine-learning project. Cosine similarity, clusters, topic prevalence, sentiment, classification performance and network centrality do not identify causal effects. Changes over time can also reflect UN membership, corpus availability and composition, not only changes in diplomatic rhetoric.
