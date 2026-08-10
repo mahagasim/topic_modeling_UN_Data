@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="470" viewBox="0 0 1000 470">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:24px;font-weight:700}.sub{font-size:13px;fill:#5d677a}.axis{font-size:12px;fill:#5d677a}.a{fill:#3767a6}.b{fill:#9fb7d4}</style>
+<text x="45" y="36" class="title">AI-course LDA: topic prevalence by continent</text><text x="45" y="58" class="sub">Mean document-level topic probability from the submitted joint 10-topic model.</text>
+<rect x="75" y="332.2" width="30" height="57.8" class="a"/><rect x="107" y="377.5" width="30" height="12.5" class="b"/><text x="106" y="410" text-anchor="middle" class="axis">T0</text>
+<rect x="163" y="212.9" width="30" height="177.1" class="a"/><rect x="195" y="359.3" width="30" height="30.7" class="b"/><text x="194" y="410" text-anchor="middle" class="axis">T1</text>
+<rect x="251" y="353.0" width="30" height="37.0" class="a"/><rect x="283" y="131.1" width="30" height="258.9" class="b"/><text x="282" y="410" text-anchor="middle" class="axis">T2</text>
+<rect x="339" y="223.3" width="30" height="166.7" class="a"/><rect x="371" y="375.9" width="30" height="14.1" class="b"/><text x="370" y="410" text-anchor="middle" class="axis">T3</text>
+<rect x="427" y="188.1" width="30" height="201.9" class="a"/><rect x="459" y="349.5" width="30" height="40.5" class="b"/><text x="458" y="410" text-anchor="middle" class="axis">T4</text>
+<rect x="515" y="242.7" width="30" height="147.3" class="a"/><rect x="547" y="283.2" width="30" height="106.8" class="b"/><text x="546" y="410" text-anchor="middle" class="axis">T5</text>
+<rect x="603" y="356.8" width="30" height="33.2" class="a"/><rect x="635" y="211.2" width="30" height="178.8" class="b"/><text x="634" y="410" text-anchor="middle" class="axis">T6</text>
+<rect x="691" y="373.0" width="30" height="17.0" class="a"/><rect x="723" y="208.0" width="30" height="182.0" class="b"/><text x="722" y="410" text-anchor="middle" class="axis">T7</text>
+<rect x="779" y="288.4" width="30" height="101.6" class="a"/><rect x="811" y="351.1" width="30" height="38.9" class="b"/><text x="810" y="410" text-anchor="middle" class="axis">T8</text>
+<rect x="867" y="332.2" width="30" height="57.8" class="a"/><rect x="899" y="255.7" width="30" height="134.3" class="b"/><text x="898" y="410" text-anchor="middle" class="axis">T9</text>
+<rect x="780" y="75" width="14" height="14" class="a"/><text x="800" y="87" class="axis">Africa</text><rect x="860" y="75" width="14" height="14" class="b"/><text x="880" y="87" class="axis">Europe</text>
+</svg>
