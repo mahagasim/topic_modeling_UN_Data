@@ -14,6 +14,12 @@ For the exact source filenames, see [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md). 
 
 This stage covers the Africa/Europe session distributions, country participation, speech-length diagnostics and the two **overall regional word clouds**.
 
+### Clear vocabulary summary
+
+![Africa-Europe source vocabulary summary](../../figures/professional/ai_regional_vocabulary_summary.svg)
+
+This vector figure is a readability aid derived from the source word clouds; the original word clouds above remain the authoritative coursework visuals.
+
 ### What the word clouds show
 
 Both regions share the institutional vocabulary of UN diplomacy. The Africa cloud gives substantial visual prominence to language around **United Nations, international community, developing countries, Africa/South Africa, peace, security and development**. The Europe cloud similarly emphasizes **United Nations, international community, human rights, Security Council, peace/security and European/Cold-War-related vocabulary**.
@@ -73,7 +79,13 @@ The source sentiment comparison shows both regional series fluctuating over 1970
 
 **Open at full resolution:** [`figure-sheet-05.jpg`](figures/figure-sheet-05.jpg)
 
-This sheet contains the four missing **sentiment-specific word clouds**:
+### Clear sentiment-vocabulary summary
+
+![Africa-Europe sentiment vocabulary summary](../../figures/professional/ai_sentiment_vocabulary_summary.svg)
+
+The source clouds remain above; this vector summary makes their substantive contrast readable at a glance.
+
+This sheet contains the four original **sentiment-specific word clouds**:
 
 ### Positive — Africa
 
