@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="650" viewBox="0 0 1000 650">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:24px;font-weight:700}.sub{font-size:13px;fill:#5d677a}.label{font-size:12px}.value{font-size:11px;font-weight:700}.bar{fill:#3767a6}.grid{stroke:#e5e8ef;stroke-width:1}</style>
+<text x="45" y="36" class="title">Professional network reconstruction: most-mentioned countries</text>
+<text x="45" y="58" class="sub">Weighted incoming mentions under the name/alias matching rule; this differs from the submitted ISO-code network.</text>
+<line x1="250" y1="90" x2="250" y2="595" class="grid"/>
+<text x="235" y="112" text-anchor="end" class="label">South Africa</text><rect x="250" y="96" width="620" height="22" rx="3" class="bar"/><text x="880" y="112" class="value">1,146</text>
+<text x="235" y="152" text-anchor="end" class="label">Namibia</text><rect x="250" y="136" width="505" height="22" rx="3" class="bar"/><text x="765" y="152" class="value">934</text>
+<text x="235" y="192" text-anchor="end" class="label">Angola</text><rect x="250" y="176" width="493" height="22" rx="3" class="bar"/><text x="753" y="192" class="value">911</text>
+<text x="235" y="232" text-anchor="end" class="label">Somalia</text><rect x="250" y="216" width="304" height="22" rx="3" class="bar"/><text x="564" y="232" class="value">562</text>
+<text x="235" y="272" text-anchor="end" class="label">Mozambique</text><rect x="250" y="256" width="272" height="22" rx="3" class="bar"/><text x="532" y="272" class="value">503</text>
+<text x="235" y="312" text-anchor="end" class="label">Zimbabwe</text><rect x="250" y="296" width="243" height="22" rx="3" class="bar"/><text x="503" y="312" class="value">450</text>
+<text x="235" y="352" text-anchor="end" class="label">Guinea</text><rect x="250" y="336" width="240" height="22" rx="3" class="bar"/><text x="500" y="352" class="value">444</text>
+<text x="235" y="392" text-anchor="end" class="label">Liberia</text><rect x="250" y="376" width="219" height="22" rx="3" class="bar"/><text x="479" y="392" class="value">405</text>
+<text x="235" y="432" text-anchor="end" class="label">Sudan</text><rect x="250" y="416" width="214" height="22" rx="3" class="bar"/><text x="474" y="432" class="value">396</text>
+<text x="235" y="472" text-anchor="end" class="label">Republic of the Congo</text><rect x="250" y="456" width="167" height="22" rx="3" class="bar"/><text x="427" y="472" class="value">308</text>
+<text x="235" y="512" text-anchor="end" class="label">Chad</text><rect x="250" y="496" width="164" height="22" rx="3" class="bar"/><text x="424" y="512" class="value">304</text>
+<text x="235" y="552" text-anchor="end" class="label">DR Congo</text><rect x="250" y="536" width="162" height="22" rx="3" class="bar"/><text x="422" y="552" class="value">300</text>
+<text x="250" y="620" class="sub">Incoming weighted mention count</text>
+</svg>
