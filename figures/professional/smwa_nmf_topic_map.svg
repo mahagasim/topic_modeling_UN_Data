@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="820" viewBox="0 0 1300 820">
+<rect width="1300" height="820" fill="white"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#5d677a}.t{font-size:19px;font-weight:700}.terms{font-size:15px}.interp{font-size:14px;fill:#5d677a}.box{fill:#f8f9fb;stroke:#dde2ea;stroke-width:2}</style>
+<text x="50" y="48" class="title">Africa extension: NMF topic map from the ten source word clouds</text>
+<text x="50" y="78" class="sub">TF-IDF + NMF, 10 factors. Coursework-reported coherence c_v = 0.5464.</text>
+<g transform="translate(45,115)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 0 · Apartheid / Southern Africa</text><text x="22" y="60" class="terms">south · namibia · apartheid · regime · resolution</text><text x="22" y="88" class="interp">Southern African liberation and apartheid-era diplomacy.</text>
+</g><g transform="translate(665,115)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 1 · Sustainable development</text><text x="22" y="60" class="terms">global · sustainable · 2015 · goal · millennium · poverty</text><text x="22" y="88" class="interp">Global goals, poverty and the MDG/2015 development agenda.</text>
+</g><g transform="translate(45,247)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 2 · Guinea / rights / governance</text><text x="22" y="60" class="terms">guinea · equatorial · bissau · republic · human · right</text><text x="22" y="88" class="interp">Country-focused governance and human-rights vocabulary.</text>
+</g><g transform="translate(665,247)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 3 · North Africa / Maghreb</text><text x="22" y="60" class="terms">morocco · tunisia · arab · egypt · palestinian · maghreb</text><text x="22" y="88" class="interp">North African, Arab and Mediterranean geopolitics.</text>
+</g><g transform="translate(45,379)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 4 · Swaziland / monarchy / diplomacy</text><text x="22" y="60" class="terms">swaziland · kingdom · majesty · swazi · taiwan · china</text><text x="22" y="88" class="interp">Monarchy, national identity and external diplomatic relations.</text>
+</g><g transform="translate(665,379)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 5 · Horn of Africa</text><text x="22" y="60" class="terms">ethiopia · somalia · eritrea · sudan · IGAD · kenya</text><text x="22" y="88" class="interp">Conflict and regional cooperation in the Horn.</text>
+</g><g transform="translate(45,511)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 6 · Independence / struggle</text><text x="22" y="60" class="terms">power · independence · struggle · right · regime · territory</text><text x="22" y="88" class="interp">Self-determination, political struggle and territorial questions.</text>
+</g><g transform="translate(665,511)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 7 · Malawi / health / food</text><text x="22" y="60" class="terms">malawi · HIV · food · AIDS · mozambique · government</text><text x="22" y="88" class="interp">Health, food security and country-specific development.</text>
+</g><g transform="translate(45,643)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 8 · Chad / Libya / Darfur</text><text x="22" y="60" class="terms">chad · libya · sudan · government · darfur</text><text x="22" y="88" class="interp">Cross-border insecurity and conflict in North/Central Africa.</text>
+</g><g transform="translate(665,643)">
+<rect width="590" height="112" rx="16" class="box"/><text x="22" y="32" class="t">Topic 9 · Great Lakes conflict</text><text x="22" y="60" class="terms">burundi · rwanda · congo · conflict · democratic · political</text><text x="22" y="88" class="interp">Conflict, governance and political transition in the Great Lakes.</text>
+</g>
+<text x="50" y="800" class="sub">Interpretation: NMF produces relatively legible factors, but several are strongly anchored by country names—an important feature of the unsupervised solution.</text>
+</svg>

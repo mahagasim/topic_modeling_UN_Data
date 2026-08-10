@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<rect width="1200" height="720" fill="white"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#5d677a}.lab{font-size:15px}.val{font-size:14px;font-weight:700}.axis{font-size:13px;fill:#687386}.bar{fill:#5875a4}.grid{stroke:#e5e8ef;stroke-width:1}</style>
+<text x="50" y="46" class="title">Africa extension: LDA topic shares in the source output</text>
+<text x="50" y="76" class="sub">Mean fitted topic share; 10-topic LDA. Source coherence c_v = 0.3663.</text>
+<line x1="410" y1="105" x2="410" y2="650" class="grid"/><line x1="610" y1="105" x2="610" y2="650" class="grid"/><line x1="810" y1="105" x2="810" y2="650" class="grid"/><line x1="1010" y1="105" x2="1010" y2="650" class="grid"/>
+<text x="410" y="675" class="axis" text-anchor="middle">0%</text><text x="610" y="675" class="axis" text-anchor="middle">10%</text><text x="810" y="675" class="axis" text-anchor="middle">20%</text><text x="1010" y="675" class="axis" text-anchor="middle">30%</text>
+<text x="50" y="130" class="lab">T0 · Zambia / Zimbabwe / colonial</text><rect x="410" y="112" width="31" height="24" class="bar"/><text x="450" y="130" class="val">1.5%</text>
+<text x="50" y="182" class="lab">T1 · Sudan / Ethiopia / Chad / Eritrea</text><rect x="410" y="164" width="88" height="24" class="bar"/><text x="507" y="182" class="val">4.4%</text>
+<text x="50" y="234" class="lab">T2 · Congo / Togo / terrorism / Burundi</text><rect x="410" y="216" width="134" height="24" class="bar"/><text x="553" y="234" class="val">6.7%</text>
+<text x="50" y="286" class="lab">T3 · recovery / Senegal / drought / structural</text><rect x="410" y="268" width="575" height="24" class="bar"/><text x="994" y="286" class="val">28.8%</text>
+<text x="50" y="338" class="lab">T4 · racist / colonial / Pretoria / Zimbabwe</text><rect x="410" y="320" width="606" height="24" class="bar"/><text x="1025" y="338" class="val">30.3%</text>
+<text x="50" y="390" class="lab">T5 · Morocco / Tunisia / Algeria / Cameroon</text><rect x="410" y="372" width="59" height="24" class="bar"/><text x="478" y="390" class="val">3.0%</text>
+<text x="50" y="442" class="lab">T6 · Mauritius / Nigeria / Cape Verde / Malawi</text><rect x="410" y="424" width="54" height="24" class="bar"/><text x="473" y="442" class="val">2.7%</text>
+<text x="50" y="494" class="lab">T7 · goals / MDGs / Niger / Côte d'Ivoire</text><rect x="410" y="476" width="256" height="24" class="bar"/><text x="675" y="494" class="val">12.8%</text>
+<text x="50" y="546" class="lab">T8 · Guinea / Egypt / Comoros / Equatorial</text><rect x="410" y="528" width="63" height="24" class="bar"/><text x="482" y="546" class="val">3.2%</text>
+<text x="50" y="598" class="lab">T9 · Somalia / Sierra Leone / Liberia / Burundi</text><rect x="410" y="580" width="126" height="24" class="bar"/><text x="545" y="598" class="val">6.3%</text>
+<text x="50" y="705" class="axis">Interpretation: colonial/apartheid and development/recovery language dominate this particular fitted LDA specification.</text>
+</svg>

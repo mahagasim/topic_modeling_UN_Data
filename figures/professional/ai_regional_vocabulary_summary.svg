@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620">
+<rect width="1200" height="620" fill="white"/>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#5d677a}.head{font-size:24px;font-weight:700}.w1{font-size:38px;font-weight:700}.w2{font-size:30px;font-weight:600}.w3{font-size:24px}.note{font-size:14px;fill:#5d677a}.box{fill:#f7f8fb;stroke:#dde2ea;stroke-width:2}
+</style>
+<text x="50" y="48" class="title">Africa–Europe vocabulary in the original coursework word clouds</text>
+<text x="50" y="78" class="sub">Source-derived vocabulary summary; term size here is illustrative, not a re-estimated frequency scale.</text>
+<rect x="45" y="110" width="535" height="425" rx="18" class="box"/>
+<rect x="620" y="110" width="535" height="425" rx="18" class="box"/>
+<text x="75" y="150" class="head">Africa</text>
+<text x="80" y="205" class="w1">United Nations</text>
+<text x="295" y="250" class="w2">peace</text>
+<text x="80" y="285" class="w2">development</text>
+<text x="340" y="315" class="w3">security</text>
+<text x="80" y="345" class="w3">international community</text>
+<text x="245" y="385" class="w3">developing country</text>
+<text x="80" y="420" class="w2">Africa</text>
+<text x="250" y="450" class="w3">South Africa</text>
+<text x="80" y="485" class="w3">Security Council</text>
+<text x="310" y="505" class="w3">cooperation</text>
+<text x="650" y="150" class="head">Europe</text>
+<text x="660" y="205" class="w1">United Nations</text>
+<text x="875" y="250" class="w2">security</text>
+<text x="660" y="285" class="w2">peace</text>
+<text x="820" y="315" class="w3">human rights</text>
+<text x="660" y="350" class="w3">international community</text>
+<text x="885" y="385" class="w3">Security Council</text>
+<text x="660" y="420" class="w2">Europe</text>
+<text x="815" y="450" class="w3">Soviet Union</text>
+<text x="660" y="485" class="w3">Member State</text>
+<text x="830" y="510" class="w3">cooperation</text>
+<text x="50" y="575" class="note">Interpretation: both corpora share a strong UN diplomatic vocabulary; relative emphasis differs across development/regional and rights/geopolitical language.</text>
+</svg>
