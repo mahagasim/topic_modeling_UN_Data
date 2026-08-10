@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="460" viewBox="0 0 900 460">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:24px;font-weight:700}.sub{font-size:13px;fill:#5d677a}.axis{font-size:12px;fill:#5d677a}.lineA{stroke:#3767a6;fill:none;stroke-width:3}.lineB{stroke:#9a5f45;fill:none;stroke-width:3}.grid{stroke:#e5e8ef;stroke-width:1}</style>
+<text x="45" y="36" class="title">LSTM training history: overfitting is visible</text>
+<text x="45" y="58" class="sub">Training accuracy approaches 100%; validation accuracy stays in the mid-80s.</text>
+<line x1="70" y1="363.0" x2="830" y2="363.0" class="grid"/><text x="60" y="367.0" text-anchor="end" class="axis">0.7</text>
+<line x1="70" y1="278.2" x2="830" y2="278.2" class="grid"/><text x="60" y="282.2" text-anchor="end" class="axis">0.8</text>
+<line x1="70" y1="193.3" x2="830" y2="193.3" class="grid"/><text x="60" y="197.3" text-anchor="end" class="axis">0.9</text>
+<line x1="70" y1="108.5" x2="830" y2="108.5" class="grid"/><text x="60" y="112.5" text-anchor="end" class="axis">1.0</text>
+<polyline points="70.0,343.3 154.4,173.1 238.9,126.8 323.3,119.3 407.8,110.4 492.2,119.9 576.7,124.6 661.1,118.5 745.6,110.7 830.0,110.7" class="lineA"/>
+<polyline points="70.0,353.3 154.4,215.9 238.9,238.0 323.3,236.9 407.8,240.3 492.2,222.6 576.7,243.6 661.1,219.2 745.6,225.9 830.0,234.7" class="lineB"/>
+<text x="70.0" y="402" text-anchor="middle" class="axis">1</text><text x="154.4" y="402" text-anchor="middle" class="axis">2</text><text x="238.9" y="402" text-anchor="middle" class="axis">3</text><text x="323.3" y="402" text-anchor="middle" class="axis">4</text><text x="407.8" y="402" text-anchor="middle" class="axis">5</text><text x="492.2" y="402" text-anchor="middle" class="axis">6</text><text x="576.7" y="402" text-anchor="middle" class="axis">7</text><text x="661.1" y="402" text-anchor="middle" class="axis">8</text><text x="745.6" y="402" text-anchor="middle" class="axis">9</text><text x="830.0" y="402" text-anchor="middle" class="axis">10</text>
+<text x="730" y="88" class="axis">Training</text><line x1="690" y1="84" x2="720" y2="84" class="lineA"/>
+<text x="730" y="108" class="axis">Validation</text><line x1="690" y1="104" x2="720" y2="104" class="lineB"/>
+</svg>

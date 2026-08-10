@@ -1,0 +1,4 @@
+model,coursework_reported_cv
+LDA,0.3663
+NMF,0.5464
+BERTopic,0.7768

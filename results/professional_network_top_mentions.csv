@@ -1,0 +1,21 @@
+code,country,in_degree,out_degree,in_strength,out_strength
+ZAF,South Africa,52,31,1146,96
+NAM,Namibia,52,38,934,153
+AGO,Angola,52,39,911,226
+SOM,Somalia,53,35,562,167
+MOZ,Mozambique,51,48,503,277
+ZWE,Zimbabwe,51,34,450,178
+GIN,Guinea,51,47,444,318
+LBR,Liberia,51,44,405,282
+SDN,Sudan,53,40,396,199
+COG,Republic of the Congo,52,47,308,308
+TCD,Chad,50,42,304,297
+COD,Democratic Republic of the Congo,51,43,300,253
+BDI,Burundi,47,40,260,260
+MAR,Morocco,47,40,256,181
+LBY,Libya,49,43,255,236
+NGA,Nigeria,50,41,248,235
+SLE,Sierra Leone,48,42,244,213
+RWA,Rwanda,50,37,227,212
+GNB,Guinea-Bissau,47,43,206,253
+ETH,Ethiopia,48,46,201,254

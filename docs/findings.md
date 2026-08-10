@@ -1,95 +1,122 @@
-# Consolidated findings from the original coursework
+# Consolidated findings
 
-This document summarizes what the two submitted coursework projects actually report. It deliberately distinguishes **source-derived findings** from methodological comments added during the professional rebuild.
+This note distinguishes **submitted/coursework findings** from **professional QA reconstructions**. The former reproduce what the two course submissions reported; the latter are explicitly labeled when the measurement definition changes.
 
-# Part I - AI course: Africa vs Europe
+## Part I — AI course foundation: Africa vs Europe
 
-## Shared vocabulary, but substantial regional separation
+### Sample
 
-The TF-IDF comparison reports a cosine similarity of **0.2640** between the African and European corpora. The submission interprets this as evidence of common diplomatic language alongside substantial differences in vocabulary and emphasis.
+The AI-course comparison uses 3,826 speeches in the saved processed snapshot: 2,159 from Africa and 1,667 from Europe, drawn from the 7,507-speech UNGD corpus covering 1970-2015 in the computational data.
 
-The regional word clouds reinforce that interpretation visually: both corpora contain the institutional vocabulary of international diplomacy, but their relative term prominence differs.
+### Regional vocabulary and EDA
 
-## Topic structure differs across regions
+The submitted project compares session distributions, country coverage, speech lengths and word clouds for Africa and Europe. The analysis emphasizes substantial common diplomatic vocabulary but meaningful differences in relative thematic prominence.
 
-The joint 10-topic LDA model identifies a mixture of historical, geopolitical and development-related themes.
+### TF-IDF / cosine similarity
 
-The submitted discussion associates European discourse more strongly with themes involving **Kosovo, terrorism, Bosnia/Yugoslavia, Cyprus and Cold War political language**, while African discourse gives more prominence to **post-colonialism/racism, African regional conflict and governance challenges**.
+The submission reports **0.2640**. QA of the original code shows that this value is `cosine_sim[0][0]`, i.e. one Europe-Africa speech pair. It should not be interpreted as a single summary of the two full regional corpora.
 
-Development and human-welfare vocabulary also appears in the shared topic structure, including **food, health, education and MDGs**.
+For transparency, the saved processed snapshot gives approximately:
 
-## Unsupervised clusters contain overlapping diplomatic vocabulary
+- first-pair cosine (coursework implementation): **0.264**;
+- deterministic sampled cross-region pairwise mean: **0.188**;
+- regional TF-IDF centroid cosine: **0.906**.
 
-K-means is estimated on TF-IDF features with three clusters selected after an elbow diagnostic. The top cluster terms remain dominated by broadly shared diplomatic concepts including `international`, `united`, `nations`, `development`, `peace`, `security`, `people`, `economic`, `africa`, and `human/right` language.
+The large difference is not a contradiction: these are different estimands.
 
-This means the clustering should not be interpreted as three clean substantive ideologies; instead, it demonstrates heterogeneous mixtures within a vocabulary that is strongly shaped by the UN diplomatic setting.
+### Joint LDA
 
-## Text predicts continent with meaningful accuracy
+The submitted joint LDA uses 10 topics, `no_above=0.30`, `no_below=10`, 50 passes and `random_state=0`. Source topic terms include:
 
-The submitted LSTM reports **85.1% test accuracy** on 766 held-out speeches.
+- **Topic 0:** Sudan, Morocco, Egypt, Mediterranean, Libya, Malta, Tunisia;
+- **Topic 1:** racist, aggression, colonial, Zimbabwe, domination, colonialism, occupation, Pretoria;
+- **Topic 2:** Kosovo, terrorist, prevention, Iraq, court, globalization, partnership;
+- **Topic 3:** Somalia, Liberia, Sierra Leone, Congo, Uganda, Sudan, governance;
+- **Topic 4:** Chad, Rwanda, Burundi, Niger, Mali;
+- **Topic 6:** Soviet, détente, socialist, Germany, armament, Cyprus;
+- **Topic 7:** Bosnia, Herzegovina, Yugoslavia, Cyprus, Croatia, Greece, Ukraine;
+- **Topic 8:** food, goals, health, education, water, MDGs.
 
-- Europe: precision 0.86, recall 0.90, F1 0.88.
-- Africa: precision 0.84, recall 0.78, F1 0.81.
+The source prevalence table shows large Africa-Europe differences. For example, Topics 1, 3 and 4 are much more prevalent in African statements, while Topics 2, 6 and 7 are much more prevalent in European statements. These are descriptive topic-model patterns.
 
-The model therefore recovers substantial regional information from text, although the misclassification rate and lower recall for African speeches show that regional discourse overlaps considerably.
+### K-means
 
-## Sentiment changes over time
+The source workflow uses TF-IDF, an elbow diagnostic and `k=3`. Source top terms are:
 
-The AI submission reports changing sentiment patterns across both continents and describes African statements as relatively more negative in parts of the 1970s through the mid-1980s. The four sentiment-specific word clouds provide qualitative context by separately visualizing strongly positive and negative sentences in Africa and Europe.
+- **Cluster 0:** country, international, united, development, nations, peace, world, people, security, African;
+- **Cluster 1:** united, nations, international, country, security, world, must, development, human, right;
+- **Cluster 2:** country, international, united, people, world, nations, peace, economic, Africa, states.
 
-**Methodological note:** the professional rebuild preserves these as submitted results while using a cleaner sentence-level VADER implementation for future reproduction.
+The saved processed snapshot assigns Africa mainly to Clusters 0 and 2 and Europe mainly to Clusters 1 and 2. The source narrative interprets these as security/development, governance/human-rights, and economic/international-relations emphases.
 
-# Part II - Social Media & Web Analytics: Africa extension
+### LSTM classification
 
-## African participation is persistent across the corpus
+The submitted model uses an 80/20 split, vocabulary 10,000, max sequence length 100, embedding dimension 100, LSTM(128), Adam learning rate 0.001, batch size 20 and 10 epochs.
 
-The submitted paper describes relatively consistent participation across UN sessions and a right-skewed distribution of speech length. Its Africa word cloud prominently features institutional and development-related vocabulary such as **United Nations**, **international community**, **developing country**, and **Security Council**.
+Submitted held-out results:
 
-## Sentiment is volatile but trends upward in the submitted analysis
+- accuracy: **85.1%**;
+- Europe: precision 0.86, recall 0.90, F1 0.88 (n=452);
+- Africa: precision 0.84, recall 0.78, F1 0.81 (n=314);
+- confusion matrix: `[[406, 46], [68, 246]]`.
 
-The SMWA paper reports substantial year-to-year variation in mean compound VADER sentiment from 1970 to 2015, alongside a **gradual upward trend in positivity**.
+The training logs also show near-perfect training accuracy by later epochs but materially lower validation accuracy, indicating overfitting. The professional notebook therefore presents the classifier as a useful demonstration of regional text signal, not as a fully optimized predictive model.
 
-Its positive sentiment word cloud emphasizes words associated with **peace, justice, people, hope and cooperation**, while the negative word cloud emphasizes **war, conflict, terrorism, poverty and violence**.
+### Sentiment
 
-## Topic models recover conflict, development and rights-related themes
+The submitted AI report describes more negative African sentiment in parts of the 1970s through the mid-1980s and shared negative vocabulary around terrorism, war, violence and conflict. Because the coursework contains multiple sentiment implementations, these are preserved as source-reported findings. The professional code uses corrected sentence-level VADER measurement for future reruns.
 
-The submitted interpretation of the three models is:
+## Part II — SMWA extension: Africa deep dive
 
-- **LDA:** regional conflicts, health issues and colonial history, including terms connected with countries such as Zambia and Sudan and with HIV/AIDS;
-- **NMF:** apartheid, sustainable development, human rights and geopolitical/social issues;
-- **BERTopic:** broader contextual topics with recurring language around nations, international affairs and development.
+### Descriptive analysis
 
-The paper reports `c_v` coherence values of **0.3663 (LDA), 0.5464 (NMF), and 0.7768 (BERTopic)** and concludes that BERTopic performs best on those values.
+The submitted paper reports:
 
-**Methodological note:** the professional audit does not treat that ranking as a fully controlled benchmark because the original coherence reference constructions differ across model sections.
+- right-skewed statement lengths, with many speeches around 5,000-20,000 characters and a peak around 10,000;
+- relatively consistent engagement across sessions;
+- frequent word-cloud terms including *United Nations*, *international community*, *developing country* and *Security Council*.
 
-## The country-mention network is regionally structured
+### Sentiment
 
-The submitted network analysis represents African countries as nodes and mentions between countries as directed weighted edges.
+The SMWA paper reports a gradual upward trend in average compound sentiment from 1970 to 2015 despite substantial year-to-year fluctuations.
 
-The paper highlights:
+Source interpretations of sentiment-specific word clouds:
 
-- **Madagascar** as especially central;
-- important positions for **Namibia** and **Comoros**;
-- **Somalia** as a notable node in conflict/humanitarian discourse;
-- **South Sudan** as comparatively isolated;
-- regional clusters involving East African countries such as Kenya, Uganda, Tanzania and Rwanda, and West African countries such as Nigeria, Ghana and Senegal.
+- **positive:** United Nations, peace, justice, people, hope, cooperation/stability;
+- **negative:** war, conflict, terrorism, poverty, violence, hardship/insecurity.
 
-These are descriptive properties of the constructed mention network, not estimates of causal influence.
+### LDA, NMF and BERTopic
 
-# Integrated interpretation
+The submitted paper reports the following `c_v` coherence values:
 
-Taken together, the two courses show a natural analytical progression:
+| Model | Coursework-reported coherence |
+|---|---:|
+| LDA | 0.3663 |
+| NMF | 0.5464 |
+| BERTopic | 0.7768 |
 
-1. **Can regional diplomatic discourse be distinguished?**  
-   The Africa-Europe comparison suggests yes: similarity is modest, topics differ in prevalence, and an LSTM classifies continent with about 85% test accuracy.
+The paper interprets:
 
-2. **What structures the African corpus internally?**  
-   The extension shows a mix of conflict, development, health, rights and international-cooperation language; sentiment varies over time; and country mentions form non-random regional/network patterns.
+- LDA topics around regional conflict, health and colonial history;
+- NMF topics around apartheid, sustainable development and human rights;
+- BERTopic as recovering broader contextual themes around nations, international affairs and development.
 
-3. **Why use multiple NLP methods?**  
-   TF-IDF, LDA, NMF, BERTopic, clustering, deep learning, sentiment analysis and networks answer different measurement questions. Agreement across methods can strengthen an interpretation, while disagreement is itself informative about representation and model assumptions.
+The original paper ranks BERTopic highest. The QA note qualifies this because coherence inputs were not fully harmonized across the three model sections.
 
-# What is not established
+### Country-mention network
 
-Neither submission identifies causal effects. The analyses do **not** establish that region causes rhetorical differences, that sentiment changes are caused by particular historical events, or that network centrality measures diplomatic power. Those would require separate identification strategies and validation exercises.
+The submitted paper reports:
+
+- Madagascar as particularly central;
+- Namibia and Comoros as prominent;
+- Somalia as a notable focus;
+- South Sudan as comparatively isolated;
+- Eritrea, Guinea-Bissau and Tunisia on the periphery;
+- an East African grouping involving Kenya, Uganda, Tanzania and Rwanda;
+- a West African grouping involving Nigeria, Ghana and Senegal.
+
+These are source-reported patterns from the original network construction. The professional name/alias-based reconstruction produces a different ranking and is presented separately because the measurement rule is different.
+
+## Interpretation boundary
+
+All results are descriptive measurements from text. Topic prevalence, sentiment, cosine similarity, cluster membership, classifier accuracy and mention-network centrality do not identify causal effects and should not be read as evidence of homogeneous regional political preferences.

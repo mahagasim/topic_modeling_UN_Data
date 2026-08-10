@@ -1,10 +1,4 @@
-"""Country-mention network utilities for the Africa-focused SMWA extension.
-
-The submitted coursework constructed a directed weighted graph linking an
-African speaker country to other African countries mentioned in its statement.
-This professional implementation matches country *names* (and optionally ISO3
-codes) in the original speech text, making the measurement rule explicit.
-"""
+"""Country-mention network utilities for the Africa-focused SMWA extension."""
 
 from __future__ import annotations
 
@@ -13,7 +7,6 @@ from collections import Counter
 
 import networkx as nx
 import pandas as pd
-
 
 AFRICAN_COUNTRIES = {
     "DZA": "Algeria", "AGO": "Angola", "BEN": "Benin", "BWA": "Botswana",
@@ -35,7 +28,6 @@ AFRICAN_COUNTRIES = {
     "ZMB": "Zambia", "ZWE": "Zimbabwe",
 }
 
-# Common historical/orthographic variants useful for the 1970-2015 corpus.
 ALIASES = {
     "COD": ["Democratic Republic of the Congo", "DR Congo", "Zaire"],
     "COG": ["Republic of the Congo", "Congo-Brazzaville"],
@@ -69,8 +61,14 @@ def build_country_mention_network(
     """Build a directed weighted network of African country mentions.
 
     A directed edge A -> B receives one count for every speech by country A
-    that contains a textual mention of country B. Multiple mentions within the
-    same speech count once; this avoids mechanically overweighting repetition.
+    containing at least one textual mention of B. Repeated mentions inside the
+    same speech count once, so rhetorical repetition does not mechanically
+    dominate edge weights.
+
+    This name/alias rule is a *professional reconstruction*. The submitted
+    coursework instead searched for three-letter country codes inside speeches;
+    the two networks should therefore not be expected to have identical
+    centrality rankings.
     """
     missing = {country_column, text_column}.difference(speeches.columns)
     if missing:
@@ -78,8 +76,8 @@ def build_country_mention_network(
 
     patterns = _patterns(include_iso_codes=include_iso_codes)
     counts: Counter[tuple[str, str]] = Counter()
-
     africa = speeches.loc[speeches[country_column].isin(AFRICAN_COUNTRIES)].copy()
+
     for _, row in africa.iterrows():
         speaker = str(row[country_column])
         text = str(row[text_column])
@@ -112,3 +110,20 @@ def centrality_table(graph: nx.DiGraph) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(
         ["in_strength", "in_degree"], ascending=False, ignore_index=True
     )
+
+
+def strongest_edges(graph: nx.DiGraph, n: int = 25) -> pd.DataFrame:
+    """Return the n highest-weight directed mention ties."""
+    rows = [
+        {
+            "source": u,
+            "source_name": graph.nodes[u].get("name", u),
+            "target": v,
+            "target_name": graph.nodes[v].get("name", v),
+            "weight": int(data.get("weight", 1)),
+        }
+        for u, v, data in graph.edges(data=True)
+    ]
+    if not rows:
+        return pd.DataFrame(columns=["source", "source_name", "target", "target_name", "weight"])
+    return pd.DataFrame(rows).sort_values("weight", ascending=False, ignore_index=True).head(n)

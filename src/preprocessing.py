@@ -5,16 +5,16 @@ from __future__ import annotations
 import re
 import unicodedata
 from collections.abc import Iterable
+from functools import lru_cache
 
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer, WordNetLemmatizer
-from nltk.tokenize import word_tokenize
-
+from nltk.tokenize import wordpunct_tokenize
 
 # Country-code sets reproduce the continent choices made in the original
-# coursework mapping. In particular, Turkey was classified under Asia and is
-# therefore not included in the Europe sample.
+# coursework mapping. Turkey was classified under Asia in the coursework and
+# is therefore not included in the Europe comparison sample.
 AFRICAN_COUNTRY_CODES = {
     "AGO", "BDI", "BEN", "BFA", "BWA", "CAF", "CIV", "CMR", "COD", "COG",
     "COM", "CPV", "DJI", "DZA", "EGY", "ERI", "ETH", "GAB", "GHA", "GIN",
@@ -37,6 +37,11 @@ DEFAULT_EXTRA_STOPWORDS = {
     "would", "could", "may", "also",
 }
 
+_NLTK_HELP = (
+    "Required NLTK data are missing. Run `python scripts/bootstrap_nltk.py` "
+    "from the repository root, then rerun the analysis."
+)
+
 
 def validate_columns(df: pd.DataFrame) -> None:
     """Raise a helpful error when required UNGD columns are missing."""
@@ -54,11 +59,7 @@ def load_ungd(path: str) -> pd.DataFrame:
 
 
 def add_coursework_continent(df: pd.DataFrame) -> pd.DataFrame:
-    """Add Africa/Europe labels using the continent mapping from the coursework.
-
-    Countries outside the two focal regions receive ``None`` because the
-    professional comparative notebook only needs the Africa-Europe subset.
-    """
+    """Add Africa/Europe labels using the continent mapping from the coursework."""
     validate_columns(df)
     out = df.copy()
     out["Continent"] = None
@@ -68,7 +69,7 @@ def add_coursework_continent(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def filter_africa(df: pd.DataFrame) -> pd.DataFrame:
-    """Return speeches from the 54 African country codes present in the coursework."""
+    """Return speeches from the 54 African country codes used in the coursework."""
     validate_columns(df)
     return df.loc[df["country"].isin(AFRICAN_COUNTRY_CODES)].copy()
 
@@ -77,6 +78,14 @@ def filter_africa_europe(df: pd.DataFrame) -> pd.DataFrame:
     """Return the Africa-Europe comparison sample used by the AI coursework."""
     out = add_coursework_continent(df)
     return out.loc[out["Continent"].notna()].copy()
+
+
+@lru_cache(maxsize=1)
+def _english_stopwords() -> set[str]:
+    try:
+        return set(stopwords.words("english"))
+    except LookupError as exc:
+        raise RuntimeError(_NLTK_HELP) from exc
 
 
 def clean_text(
@@ -88,18 +97,19 @@ def clean_text(
 ) -> str:
     """Normalize one speech with a transparent, configurable pipeline.
 
-    The rebuild keeps the core logic of the original coursework while removing
-    notebook-specific side effects and hard-coded paths.
+    The logic follows the original coursework (lowercasing, punctuation removal,
+    tokenization, English stop-word removal and optional lemmatization/stemming)
+    while avoiding Colab-specific state. ``wordpunct_tokenize`` is deliberately
+    used because it does not require the NLTK ``punkt`` model.
     """
     text = unicodedata.normalize("NFKC", str(text)).lower()
     text = re.sub(r"[^\w\s]", " ", text)
     text = re.sub(r"\s+", " ", text).strip()
 
-    tokens = word_tokenize(text)
-    stop_words = set(stopwords.words("english"))
-    stop_words.update(DEFAULT_EXTRA_STOPWORDS)
+    tokens = wordpunct_tokenize(text)
+    stop_words = _english_stopwords().union(DEFAULT_EXTRA_STOPWORDS)
     if extra_stopwords:
-        stop_words.update(extra_stopwords)
+        stop_words = stop_words.union(extra_stopwords)
 
     tokens = [
         token
@@ -109,7 +119,10 @@ def clean_text(
 
     if lemmatize:
         lemmatizer = WordNetLemmatizer()
-        tokens = [lemmatizer.lemmatize(token) for token in tokens]
+        try:
+            tokens = [lemmatizer.lemmatize(token) for token in tokens]
+        except LookupError as exc:
+            raise RuntimeError(_NLTK_HELP) from exc
 
     if stem:
         stemmer = SnowballStemmer("english")
@@ -119,7 +132,7 @@ def clean_text(
 
 
 def add_text_features(df: pd.DataFrame) -> pd.DataFrame:
-    """Return a copy with reproducible text features."""
+    """Return a copy with reproducible text-length and cleaned-text features."""
     validate_columns(df)
     out = df.copy()
     out["text"] = out["text"].fillna("").astype(str)

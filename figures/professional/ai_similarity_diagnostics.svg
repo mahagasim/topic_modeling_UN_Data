@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="460" viewBox="0 0 950 460">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:24px;font-weight:700}.sub{font-size:13px;fill:#5d677a}.axis{font-size:12px;fill:#5d677a}.label{font-size:13px}.value{font-size:12px;font-weight:700}.grid{stroke:#e5e8ef;stroke-width:1}.a{fill:#3767a6}.b{fill:#9fb7d4}.lineA{stroke:#3767a6;fill:none;stroke-width:3}.lineB{stroke:#9a5f45;fill:none;stroke-width:3}</style>
+<text x="45" y="38" class="title">TF-IDF similarity: distinguish the estimand</text>
+<text x="45" y="62" class="sub">The coursework 0.2640 value is one speech pair, not a regional-corpus statistic.</text>
+<rect x="125" y="274.3" width="120" height="60.7" class="a" rx="4"/>
+<text x="185" y="264.3" text-anchor="middle" class="value">0.264</text>
+<text x="185" y="359" text-anchor="middle" class="axis">Coursework</text><text x="185" y="375" text-anchor="middle" class="axis">first pair</text>
+<rect x="410" y="291.8" width="120" height="43.2" class="a" rx="4"/><text x="470" y="281.8" text-anchor="middle" class="value">0.188</text><text x="470" y="359" text-anchor="middle" class="axis">Sampled pairwise</text><text x="470" y="375" text-anchor="middle" class="axis">mean</text>
+<rect x="695" y="126.6" width="120" height="208.4" class="a" rx="4"/><text x="755" y="116.6" text-anchor="middle" class="value">0.906</text><text x="755" y="359" text-anchor="middle" class="axis">Regional centroid</text><text x="755" y="375" text-anchor="middle" class="axis">cosine</text>
+<text x="45" y="430" class="sub">Definitions and exact values: results/ai_similarity_audit.csv</text>
+</svg>

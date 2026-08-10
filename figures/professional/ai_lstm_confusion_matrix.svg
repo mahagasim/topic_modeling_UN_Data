@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="520" viewBox="0 0 650 520">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#172033}.title{font-size:24px;font-weight:700}.sub{font-size:13px;fill:#5d677a}.label{font-size:13px}</style>
+<text x="40" y="36" class="title">AI-course LSTM: held-out confusion matrix</text><text x="40" y="60" class="sub">Submitted model accuracy: 85.1% on 766 speeches.</text>
+<rect x="190" y="120" width="140" height="140" fill="#3767a6" stroke="white"/><text x="260" y="198" text-anchor="middle" style="font-size:26px;font-weight:700;fill:white">406</text>
+<rect x="330" y="120" width="140" height="140" fill="#dce6f1" stroke="white"/><text x="400" y="198" text-anchor="middle" style="font-size:26px;font-weight:700;fill:#172033">46</text>
+<rect x="190" y="260" width="140" height="140" fill="#d4e0ed" stroke="white"/><text x="260" y="338" text-anchor="middle" style="font-size:26px;font-weight:700;fill:#172033">68</text>
+<rect x="330" y="260" width="140" height="140" fill="#6d91bd" stroke="white"/><text x="400" y="338" text-anchor="middle" style="font-size:26px;font-weight:700;fill:white">246</text>
+<text x="260" y="105" text-anchor="middle" class="label">Pred Europe</text><text x="400" y="105" text-anchor="middle" class="label">Pred Africa</text><text x="172" y="190" text-anchor="end" class="label">Actual Europe</text><text x="172" y="330" text-anchor="end" class="label">Actual Africa</text>
+</svg>

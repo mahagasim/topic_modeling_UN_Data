@@ -1,0 +1,4 @@
+metric,value,definition
+coursework_first_pair,0.26400445970191205,Original notebook cosine_sim[0][0]; one Europe-Africa speech pair
+sampled_pairwise_mean_300x300,0.1878469508766369,Deterministic sample mean of cross-region speech-pair cosines
+regional_centroid_cosine,0.9062822726470486,Cosine between mean TF-IDF vectors for Africa and Europe

@@ -1,2 +1,2 @@
 -r requirements.txt
-tensorflow>=2.15
+pytest>=8.0
