@@ -1,0 +1,11 @@
+topic,mean_topic_share,top_terms,source_interpretation
+0,0.0154,"zambia; zimbabwe; botswana; colonial; agreed","Southern Africa / colonial transition"
+1,0.0440,"sudan; ethiopia; chad; eritrea; libya","Horn and Northeast African geopolitics"
+2,0.0671,"congo; togo; terrorist; burundi; guinea-bissau","Conflict/security and country-specific crises"
+3,0.2876,"connection; recovery; senegal; drought; structural","Development, recovery and structural challenges"
+4,0.3032,"racist; colonial; pretoria; zimbabwe; colonialism","Apartheid, colonialism and liberation politics"
+5,0.0297,"morocco; tunisia; algeria; cameroon; kingdom","North Africa / monarchy and regional politics"
+6,0.0270,"mauritius; nigeria; cape verde; malawi","Country-specific regional discourse"
+7,0.1279,"goals; d'ivoire; mdgs; niger; kingdom","MDGs and development goals"
+8,0.0316,"guinea; egypt; comoros; equatorial; island","Country/island and regional vocabulary"
+9,0.0632,"somalia; sierra leone; liberia; burundi","Conflict and post-conflict states"
