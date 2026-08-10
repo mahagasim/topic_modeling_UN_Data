@@ -67,6 +67,10 @@ The professional code also corrects a unit-of-analysis issue in the original sen
 
 The source folder contains `LDA_topic_distribution.png` in addition to the paper's textual topic-model discussion.
 
+### Clear source-output summary
+
+![Africa LDA topic shares](../../figures/professional/smwa_lda_topic_shares.svg)
+
 The executed source notebook reports **LDA `c_v` coherence = 0.3663**. The largest fitted topic shares in the source output are:
 
 - Topic 4 — racist / colonial / Pretoria / Zimbabwe / colonialism: **~30.3%**;
@@ -79,6 +83,8 @@ The executed source notebook reports **LDA `c_v` coherence = 0.3663**. The large
 
 Under this specification, colonial/apartheid-related discourse and development/recovery language account for a large fraction of the fitted topic mass, while conflict, MDGs and region/country-specific issues form additional components.
 
+Full structured source output: [`../../results/smwa_lda_topics.csv`](../../results/smwa_lda_topics.csv).
+
 ---
 
 ## 5. NMF topic heatmap and ten topic word clouds
@@ -89,6 +95,10 @@ The source files are:
 
 - `topic_distribution_heatmap.png`;
 - `topic_0.png` through `topic_9.png`.
+
+### Clear ten-topic summary
+
+![NMF topic map](../../figures/professional/smwa_nmf_topic_map.svg)
 
 The executed notebook reports **NMF `c_v` coherence = 0.5464**.
 
@@ -111,6 +121,8 @@ The executed notebook reports **NMF `c_v` coherence = 0.5464**.
 
 NMF produces several topics that are relatively easy to label from their highest-weighted terms. At the same time, country names are often dominant. This is useful for mapping geographically concentrated discourse but also warns that an unsupervised model can separate documents by country-specific vocabulary rather than only by abstract policy domain.
 
+Full structured source output: [`../../results/smwa_nmf_topics.csv`](../../results/smwa_nmf_topics.csv).
+
 ---
 
 ## 6. BERTopic output
@@ -118,6 +130,8 @@ NMF produces several topics that are relatively easy to label from their highest
 The final Drive `Graphs` folder does **not** contain a separate static BERTopic PNG. The source notebook stores BERTopic results as topic information and topic-word outputs.
 
 The executed coursework copy reports **BERTopic `c_v` coherence = 0.7768**, the highest of the three source-reported values. Topics range from broad institutional language around nations, development, international affairs and peace to narrower country-specific clusters involving Liberia, Somalia, Angola, Madagascar and others; one source topic also clearly contains climate-change language.
+
+The executed notebook contains **53 BERTopic topics (0–52)**. All source topic-word outputs are now preserved in [`../../results/smwa_bertopic_topics.csv`](../../results/smwa_bertopic_topics.csv).
 
 ### Interpretation
 
