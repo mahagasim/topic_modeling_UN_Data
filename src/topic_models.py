@@ -30,9 +30,18 @@ class NMFResult:
     coherence: float
 
 
+def _stop_words() -> set[str]:
+    try:
+        return set(stopwords.words("english"))
+    except LookupError as exc:
+        raise RuntimeError(
+            "NLTK stopwords are missing. Run `python scripts/bootstrap_nltk.py`."
+        ) from exc
+
+
 def tokenize_for_coherence(documents: list[str]) -> list[list[str]]:
     """Tokenize documents once so model coherence is evaluated consistently."""
-    stop_words = set(stopwords.words("english"))
+    stop_words = _stop_words()
     return [
         [
             word
@@ -45,7 +54,11 @@ def tokenize_for_coherence(documents: list[str]) -> list[list[str]]:
 
 def topic_coherence(topics: list[list[str]], tokenized_docs: list[list[str]]) -> float:
     """Compute c_v coherence against a common tokenized reference corpus."""
+    if not topics or not tokenized_docs:
+        raise ValueError("topics and tokenized_docs must both be non-empty.")
     dictionary = corpora.Dictionary(tokenized_docs)
+    if len(dictionary) == 0:
+        raise ValueError("Reference dictionary is empty.")
     model = CoherenceModel(
         topics=topics,
         texts=tokenized_docs,
@@ -65,9 +78,13 @@ def fit_lda(
     random_state: int = 0,
 ) -> LDAResult:
     """Fit the LDA specification used in the original Africa analysis."""
+    if not documents:
+        raise ValueError("documents must be non-empty.")
     texts = tokenize_for_coherence(documents)
     dictionary = corpora.Dictionary(texts)
     dictionary.filter_extremes(no_above=no_above, no_below=no_below)
+    if len(dictionary) == 0:
+        raise ValueError("Vocabulary is empty after filtering; relax no_above/no_below.")
     corpus = [dictionary.doc2bow(text) for text in texts]
 
     model = LdaModel(
@@ -90,6 +107,8 @@ def fit_lda(
 
 def lda_topic_prevalence(result: LDAResult) -> list[float]:
     """Return mean document-level probability for each LDA topic."""
+    if not result.corpus:
+        raise ValueError("LDA corpus is empty.")
     distributions = [
         dict(result.model.get_document_topics(bow, minimum_probability=0.0))
         for bow in result.corpus
@@ -110,11 +129,9 @@ def fit_nmf(
     top_n: int = 10,
 ) -> NMFResult:
     """Fit NMF to TF-IDF and evaluate topics against the same reference corpus."""
-    vectorizer = TfidfVectorizer(
-        max_df=max_df,
-        min_df=min_df,
-        stop_words="english",
-    )
+    if not documents:
+        raise ValueError("documents must be non-empty.")
+    vectorizer = TfidfVectorizer(max_df=max_df, min_df=min_df, stop_words="english")
     tfidf = vectorizer.fit_transform(documents)
     model = NMF(n_components=num_topics, random_state=random_state)
     document_topic_matrix = model.fit_transform(tfidf)
@@ -126,7 +143,6 @@ def fit_nmf(
     ]
     tokens = tokenize_for_coherence(documents)
     coherence = topic_coherence(topics, tokens)
-
     return NMFResult(model, vectorizer, document_topic_matrix, topics, coherence)
 
 
@@ -137,9 +153,13 @@ def fit_bertopic(
     min_topic_size: int = 10,
     verbose: bool = False,
 ):
-    """Fit BERTopic lazily so classical models do not require its dependencies."""
-    from bertopic import BERTopic
-
+    """Fit BERTopic lazily so the classical workflow stays lightweight."""
+    try:
+        from bertopic import BERTopic
+    except ImportError as exc:
+        raise ImportError(
+            "BERTopic is optional. Install it with `pip install -r requirements-bertopic.txt`."
+        ) from exc
     model = BERTopic(
         n_gram_range=n_gram_range,
         min_topic_size=min_topic_size,
