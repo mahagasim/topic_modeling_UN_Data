@@ -1,8 +1,8 @@
 # AI course — complete Africa-Europe visual gallery
 
-This page makes the **original AI-course analytical outputs visible directly in GitHub** rather than requiring a reader to hunt through the submitted PDF. The source audit found **22 individual PNG files** in the final Africa-Europe `Graphs` folder; they are represented below in the five archival sheets created from the original coursework outputs.
+This page makes the **original AI-course analytical outputs visible directly in GitHub** rather than requiring a reader to hunt through the submitted PDF. The source audit found **22 individual analytical files** in the final Africa-Europe `Graphs` folder; the original outputs are collected below in five archival JPEG sheets that render reliably in GitHub Markdown.
 
-For the exact source filenames, see [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md). For model mechanics and detailed interpretation, see [`../../docs/models_and_interpretation.md`](../../docs/models_and_interpretation.md).
+For the filename-level source inventory, see [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md). For model mechanics and detailed interpretation, see [`../../docs/models_and_interpretation.md`](../../docs/models_and_interpretation.md).
 
 ---
 
@@ -12,34 +12,30 @@ For the exact source filenames, see [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md). 
 
 **Open at full resolution:** [`figure-sheet-01.jpg`](figures/figure-sheet-01.jpg)
 
-This stage covers the Africa/Europe session distributions, country participation, speech-length diagnostics and the two **overall regional word clouds**.
+This sheet covers the Africa/Europe session distributions, country participation, speech-length diagnostics and the two **overall regional word clouds**.
 
-### Clear vocabulary summary
+### Interpretation
 
-![Africa-Europe source vocabulary summary](../../figures/professional/ai_regional_vocabulary_summary.svg)
+Both regions share the institutional vocabulary of UN diplomacy. The Africa cloud gives substantial visual prominence to **United Nations, international community, developing countries, Africa/South Africa, peace, security and development**. The Europe cloud similarly emphasizes **United Nations, international community, human rights, Security Council, peace/security and European/Cold-War-related vocabulary**.
 
-This vector figure is a readability aid derived from the source word clouds; the original word clouds above remain the authoritative coursework visuals.
-
-### What the word clouds show
-
-Both regions share the institutional vocabulary of UN diplomacy. The Africa cloud gives substantial visual prominence to language around **United Nations, international community, developing countries, Africa/South Africa, peace, security and development**. The Europe cloud similarly emphasizes **United Nations, international community, human rights, Security Council, peace/security and European/Cold-War-related vocabulary**.
-
-The key interpretation is comparative: the same institutional language dominates both corpora, but the **relative prominence of development, colonial/regional and European geopolitical terms differs**.
+The key comparison is relative prominence rather than mere word presence. Word clouds are exploratory frequency displays, not formal tests of regional priorities.
 
 ---
 
-## 2. TF-IDF and LDA topic comparison
+## 2. TF-IDF similarity and LDA topic comparison
 
 ![AI course: text similarity and LDA topic comparison](figures/figure-sheet-02.jpg)
 
 **Open at full resolution:** [`figure-sheet-02.jpg`](figures/figure-sheet-02.jpg)
 
-The LDA plot compares the prevalence of a joint **10-topic model** between Africa and Europe. Strong contrasts include:
+The source notebook computes TF-IDF representations and a Europe×Africa cosine-similarity matrix. A QA finding is that the submitted **0.2640** scalar is `cosine_sim[0][0]` — one Europe–Africa speech pair, not a regional-corpus average. The professional audit therefore separates it from the sampled pairwise mean (~0.188) and regional centroid cosine (~0.906).
 
-- Africa-heavy topics involving **colonialism/racism**, Somalia-Liberia-Sierra Leone-Congo, Chad-Rwanda-Burundi and development/health/MDGs;
-- Europe-heavy topics involving **Kosovo/terrorism**, Soviet/détente language and Bosnia-Herzegovina/Yugoslavia/Cyprus.
+The joint **10-topic LDA** model reveals strong regional contrasts:
 
-The TF-IDF QA note is important: the submitted `0.2640` scalar was one Europe-Africa speech-pair similarity (`cosine_sim[0][0]`), not a regional average. The professional README now reports that value separately from pairwise and centroid similarity estimands.
+- Africa-heavy themes: **colonialism/racism**, Somalia-Liberia-Sierra Leone-Congo, Chad-Rwanda-Burundi, development/health/MDGs;
+- Europe-heavy themes: **Kosovo/terrorism**, Soviet/détente language, Bosnia-Herzegovina/Yugoslavia/Cyprus.
+
+Full topic terms and prevalence values are stored in [`../../results/ai_lda_topics_and_prevalence.csv`](../../results/ai_lda_topics_and_prevalence.csv).
 
 ---
 
@@ -49,9 +45,14 @@ The TF-IDF QA note is important: the submitted `0.2640` scalar was one Europe-Af
 
 **Open at full resolution:** [`figure-sheet-03.jpg`](figures/figure-sheet-03.jpg)
 
-The elbow diagnostic motivates **three clusters**. In the audited saved-data snapshot, African speeches dominate Cluster 0, European speeches dominate Cluster 1, and both regions have substantial representation in Cluster 2.
+The elbow diagnostic motivates **three clusters**. In the audited saved-data snapshot:
 
-The cluster vocabularies all contain generic UN terms, so the clusters should be interpreted as **different mixtures of development/security, governance/rights and economic/international-relations language**, not as three clean political ideologies.
+| Continent | Cluster 0 | Cluster 1 | Cluster 2 |
+|---|---:|---:|---:|
+| Africa | **1,194** | 51 | **914** |
+| Europe | 8 | **1,140** | **519** |
+
+Source top terms suggest a development/security-heavy cluster, a governance/rights-heavy cluster, and a mixed economic/international-relations cluster. Because generic UN terms appear throughout, the clusters should not be interpreted as clean ideological blocs.
 
 ---
 
@@ -61,15 +62,17 @@ The cluster vocabularies all contain generic UN terms, so the clusters should be
 
 **Open at full resolution:** [`figure-sheet-04.jpg`](figures/figure-sheet-04.jpg)
 
-This sheet includes the LSTM evaluation and the **Africa-Europe VADER sentiment distribution/trend graphs** that were difficult to find on the previous GitHub page.
+This sheet includes the LSTM evaluation and the **Africa-Europe VADER sentiment distribution and sentiment-over-time graphs**.
 
 ### LSTM result
 
-The coursework reports **85.1% held-out accuracy**. Europe has precision/recall/F1 of **0.86/0.90/0.88** and Africa **0.84/0.78/0.81**. The result shows that text contains substantial regional signal, although the training history also shows overfitting.
+The coursework reports **85.1% held-out accuracy**. Europe has precision/recall/F1 of **0.86/0.90/0.88** and Africa **0.84/0.78/0.81**. The training history indicates overfitting because training accuracy approaches 100% while validation accuracy remains around the mid-80s.
 
 ### Sentiment result
 
-The source sentiment comparison shows both regional series fluctuating over 1970–2015. The submitted interpretation emphasizes relatively more negative African sentiment in parts of the **1970s through the mid-1980s**, followed by improvement and continued variation. The professional QA retains the original plot while separately documenting the sentiment unit-of-analysis issue in the source code.
+The source sentiment comparison shows both regional series fluctuating over 1970–2015. The submitted interpretation emphasizes relatively more negative African sentiment in parts of the **1970s through the mid-1980s**, followed by improvement and continued variation.
+
+The professional QA retains the original plot while documenting the unit-of-analysis problem found in one source sentiment path.
 
 ---
 
@@ -79,39 +82,22 @@ The source sentiment comparison shows both regional series fluctuating over 1970
 
 **Open at full resolution:** [`figure-sheet-05.jpg`](figures/figure-sheet-05.jpg)
 
-### Clear sentiment-vocabulary summary
+This sheet contains the four original **sentiment-specific word clouds**.
 
-![Africa-Europe sentiment vocabulary summary](../../figures/professional/ai_sentiment_vocabulary_summary.svg)
+| Region / polarity | Prominent source vocabulary | Interpretation |
+|---|---|---|
+| Africa — positive | United Nations, peace, security, justice, freedom, hope, progress, support, respect | cooperation, institutional aspiration and peace/security |
+| Africa — negative | world war, conflict, terrorism, violence, poverty, destruction, crisis, weapon | conflict, insecurity and hardship |
+| Europe — positive | United Nations, freedom, peace, security, respect, support, cooperation, justice | institutional cooperation, rights and peace |
+| Europe — negative | war, terrorism, violence, weapon, conflict, mass destruction, crisis, human rights | conflict/security threats and rights violations |
 
-The source clouds remain above; this vector summary makes their substantive contrast readable at a glance.
-
-This sheet contains the four original **sentiment-specific word clouds**:
-
-### Positive — Africa
-
-Prominent language includes **United Nations, peace, security, people, justice, freedom, hope, progress, organization, support and respect**.
-
-### Negative — Africa
-
-Prominent language includes **world war, conflict, terrorism, violence, poverty, destruction, crisis and weapons**.
-
-### Positive — Europe
-
-Prominent language includes **United Nations, freedom, peace, people, security, respect, support, cooperation, organization and justice**.
-
-### Negative — Europe
-
-Prominent language includes **war, terrorism, violence, weapons, conflict, mass destruction, crisis and human rights**.
-
-### Interpretation
-
-The clouds show a notable shared diplomatic sentiment vocabulary: positive passages emphasize **peace, cooperation, rights and institutional support**, while negative passages emphasize **war, violence, terrorism, conflict and weapons**. The differences are in relative emphasis rather than completely distinct vocabularies.
+The common pattern is clear: positive passages emphasize **peace, cooperation, rights and institutional support**, while negative passages emphasize **war, violence, terrorism, conflict and weapons**.
 
 ---
 
-## Complete source inventory
+## Complete AI-course source accounting
 
-The final Drive `Graphs` folder contains **22 individual AI-course plot files** covering:
+The final Drive `Graphs` folder contains **22 analytical source files**:
 
 - 8 EDA/regional-vocabulary plots;
 - 1 LDA comparison plot;
@@ -120,6 +106,6 @@ The final Drive `Graphs` folder contains **22 individual AI-course plot files** 
 - 2 sentiment distribution/trend plots;
 - 4 positive/negative sentiment word clouds.
 
-Every filename is listed in [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md).
+Every source filename is listed in [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md).
 
-The professional reconstruction of the analytical pipeline is organized in [`../../notebooks/02_africa_europe_ml.ipynb`](../../notebooks/02_africa_europe_ml.ipynb), with reusable code in [`../../src/comparative_analysis.py`](../../src/comparative_analysis.py), [`../../src/sentiment.py`](../../src/sentiment.py) and [`../../src/visualization.py`](../../src/visualization.py).
+The professional reconstruction is organized in [`../../notebooks/02_africa_europe_ml.ipynb`](../../notebooks/02_africa_europe_ml.ipynb), with reusable code in [`../../src/comparative_analysis.py`](../../src/comparative_analysis.py), [`../../src/sentiment.py`](../../src/sentiment.py) and [`../../src/visualization.py`](../../src/visualization.py).

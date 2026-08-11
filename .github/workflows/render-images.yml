@@ -1,0 +1,51 @@
+name: Render PNG figures
+
+on:
+  push:
+    branches: [fix-graph-rendering]
+    paths:
+      - scripts/build_rendered_images.py
+      - .github/workflows/render-images.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix-graph-rendering
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install image dependencies
+        run: pip install pillow cairosvg
+      - name: Generate PNG fallbacks and update markdown
+        run: python scripts/build_rendered_images.py
+      - name: Validate rendered images
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          paths = sorted(Path('figures/rendered').glob('*.png'))
+          assert len(paths) == 18, f'Expected 18 PNGs, got {len(paths)}'
+          for p in paths:
+              with Image.open(p) as im:
+                  im.verify()
+              print('OK', p)
+          PY
+      - name: Commit generated PNGs and markdown path fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add figures/rendered README.md coursework/ai_course/figures.md coursework/social_media_web_analytics/figures.md
+          if git diff --cached --quiet; then
+            echo "No rendered-image changes to commit"
+            exit 0
+          fi
+          git commit -m "Use PNG fallbacks for reliable graph rendering"
+          git push origin HEAD:fix-graph-rendering

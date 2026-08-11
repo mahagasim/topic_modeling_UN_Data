@@ -1,0 +1,1 @@
+Image repair complete: repaired=0, unresolved=0

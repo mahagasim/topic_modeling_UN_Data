@@ -1,8 +1,8 @@
 # Social Media & Web Analytics — complete visual analysis
 
-This page documents the **Africa-focused SMWA extension** using both the figures embedded in the submitted paper and the richer final source `Graphs` folder found during the second Google Drive audit.
+This page documents the **Africa-focused SMWA extension** using the figures embedded in the submitted paper and the richer final source `Graphs` folder found during the Google Drive audit.
 
-The source folder contains **21 analytical PNG files** — substantially more than the seven figures embedded in the submitted paper. The full filename-level inventory is in [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md), and detailed model explanations are in [`../../docs/models_and_interpretation.md`](../../docs/models_and_interpretation.md).
+The source folder contains **21 analytical image files** — substantially more than the seven figures embedded in the submitted paper. The filename-level inventory is in [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md), and detailed model explanations are in [`../../docs/models_and_interpretation.md`](../../docs/models_and_interpretation.md).
 
 ---
 
@@ -12,7 +12,7 @@ The source folder contains **21 analytical PNG files** — substantially more th
 
 **Open at full resolution:** [`figure-sheet-01.jpg`](figures/figure-sheet-01.jpg)
 
-The paper-level visual set contains:
+The submitted-paper visual set contains:
 
 - Africa statement-length distribution;
 - Africa participation across UN sessions;
@@ -28,81 +28,54 @@ The paper-level visual set contains:
 
 ## 2. Africa overall word cloud
 
-The final source graph folder contains `wordcloud_Africa.png` separately from the paper sheet.
-
-The most visible vocabulary is institutional and development-oriented, including **United Nations, international community, developing country, Security Council, peace, development and cooperation-related language**.
+The final source graph folder contains `wordcloud_Africa.png` separately from the paper sheet. The most visible vocabulary is institutional and development-oriented, including **United Nations, international community, developing country, Security Council, peace, development and cooperation-related language**.
 
 ### Interpretation
 
-The cloud confirms that the African corpus is strongly structured by the common language of multilateral diplomacy. Because a frequency cloud does not account for document length, time or country composition, it is used as exploratory evidence rather than as a formal comparison of priorities.
+The cloud confirms that the African corpus is strongly structured by the shared language of multilateral diplomacy. Because a frequency cloud does not adjust for document length, time or country composition, it is exploratory evidence rather than a formal comparison of priorities.
 
 ---
 
 ## 3. Sentiment distribution and sentiment over time
 
-The source `Graphs` folder contains both:
-
-- `sentiment_distribution.png`;
-- `sentiment_trends_over_time.png`.
+The final source folder contains both `sentiment_distribution.png` and `sentiment_trends_over_time.png`, as well as positive/negative Africa word clouds.
 
 The submitted analysis reports noticeable year-to-year variation together with a **gradual upward trend in average positivity over 1970–2015**.
 
-### Positive sentiment word cloud
+| Sentiment subset | Prominent source vocabulary | Interpretation |
+|---|---|---|
+| Positive Africa | United Nations, peace, organization, people, security, justice, freedom, development, hope, respect | cooperation, peace and institutional aspiration |
+| Negative Africa | war, terrorism, conflict, violence, destruction, poverty, weapon, crisis | security threats, conflict and hardship |
 
-The source `positive_africa.png` prominently features **United Nations, peace, organization, people, security, justice, freedom, development, hope and respect**.
-
-### Negative sentiment word cloud
-
-The source `negative_africa.png` emphasizes **war, people, terrorism, conflict, violence, destruction, state, poverty, weapon and crisis**.
-
-### Interpretation
-
-Positive passages are dominated by the aspirational/institutional vocabulary of cooperation and peace; negative passages are dominated by security threats, violence and hardship. The result is substantively plausible for diplomatic speeches, but VADER is still a lexicon-based measurement and should not be interpreted as a direct measure of government welfare, ideology or latent preference.
-
-The professional code also corrects a unit-of-analysis issue in the original sentiment workflow by scoring sentence-like units from raw speech text before aggregation.
+VADER is a rule-based lexicon measurement rather than a learned model of diplomatic preferences. The professional implementation also corrects a source unit-of-analysis issue by scoring sentence-like units from raw speech text before aggregation.
 
 ---
 
 ## 4. LDA topic distribution
 
-The source folder contains `LDA_topic_distribution.png` in addition to the paper's textual topic-model discussion.
+The final source folder contains `LDA_topic_distribution.png`. The executed source notebook reports **LDA `c_v` coherence = 0.3663**.
 
-### Clear source-output summary
+The largest fitted topic shares in the source output are:
 
-![Africa LDA topic shares](../../figures/professional/smwa_lda_topic_shares.svg)
-
-The executed source notebook reports **LDA `c_v` coherence = 0.3663**. The largest fitted topic shares in the source output are:
-
-- Topic 4 — racist / colonial / Pretoria / Zimbabwe / colonialism: **~30.3%**;
-- Topic 3 — connection / recovery / Senegal / drought / structural: **~28.8%**;
-- Topic 7 — goals / MDGs / Niger / Côte d'Ivoire-related language: **~12.8%**;
-- Topic 2 — Congo / Togo / terrorism / Burundi / Guinea-Bissau: **~6.7%**;
-- Topic 9 — Somalia / Sierra Leone / Liberia / Burundi: **~6.3%**.
+| Topic | Source terms / interpretation | Mean share |
+|---|---|---:|
+| Topic 4 | racist, colonial, Pretoria, Zimbabwe, colonialism | **~30.3%** |
+| Topic 3 | connection, recovery, Senegal, drought, structural | **~28.8%** |
+| Topic 7 | goals, MDGs, Niger, Côte d'Ivoire-related language | **~12.8%** |
+| Topic 2 | Congo, Togo, terrorism, Burundi, Guinea-Bissau | **~6.7%** |
+| Topic 9 | Somalia, Sierra Leone, Liberia, Burundi | **~6.3%** |
 
 ### Interpretation
 
-Under this specification, colonial/apartheid-related discourse and development/recovery language account for a large fraction of the fitted topic mass, while conflict, MDGs and region/country-specific issues form additional components.
+Under this specification, colonial/apartheid-related discourse and development/recovery language account for a large part of the fitted topic mass, while conflict, MDGs and country/region-specific issues form additional components.
 
-Full structured source output: [`../../results/smwa_lda_topics.csv`](../../results/smwa_lda_topics.csv).
+Full source output: [`../../results/smwa_lda_topics.csv`](../../results/smwa_lda_topics.csv).
 
 ---
 
 ## 5. NMF topic heatmap and ten topic word clouds
 
-These were missing from the previous GitHub explanation even though the final Drive `Graphs` folder contains them.
-
-The source files are:
-
-- `topic_distribution_heatmap.png`;
-- `topic_0.png` through `topic_9.png`.
-
-### Clear ten-topic summary
-
-![NMF topic map](../../figures/professional/smwa_nmf_topic_map.svg)
-
-The executed notebook reports **NMF `c_v` coherence = 0.5464**.
-
-### Source-derived topic interpretation
+The final Drive graph folder contains `topic_distribution_heatmap.png` plus **`topic_0.png` through `topic_9.png`**. The executed notebook reports **NMF `c_v` coherence = 0.5464**.
 
 | NMF topic | Dominant terms | Interpretation |
 |---|---|---|
@@ -117,56 +90,49 @@ The executed notebook reports **NMF `c_v` coherence = 0.5464**.
 | 8 | chad, libya, sudan, darfur | Chad-Libya-Sudan / Darfur security |
 | 9 | burundi, rwanda, congo, conflict, democratic | Great Lakes conflict and governance |
 
-### Interpretation
+NMF yields several relatively interpretable factors, but country names are often dominant. That helps map geographically concentrated discourse while also warning that unsupervised models may separate documents by country-specific vocabulary rather than only by abstract policy domain.
 
-NMF produces several topics that are relatively easy to label from their highest-weighted terms. At the same time, country names are often dominant. This is useful for mapping geographically concentrated discourse but also warns that an unsupervised model can separate documents by country-specific vocabulary rather than only by abstract policy domain.
-
-Full structured source output: [`../../results/smwa_nmf_topics.csv`](../../results/smwa_nmf_topics.csv).
+Full source output: [`../../results/smwa_nmf_topics.csv`](../../results/smwa_nmf_topics.csv).
 
 ---
 
 ## 6. BERTopic output
 
-The final Drive `Graphs` folder does **not** contain a separate static BERTopic PNG. The source notebook stores BERTopic results as topic information and topic-word outputs.
+The final Drive `Graphs` folder does **not** contain a separate static BERTopic figure. The executed source notebook stores BERTopic results as topic information and topic-word outputs.
 
-The executed coursework copy reports **BERTopic `c_v` coherence = 0.7768**, the highest of the three source-reported values. Topics range from broad institutional language around nations, development, international affairs and peace to narrower country-specific clusters involving Liberia, Somalia, Angola, Madagascar and others; one source topic also clearly contains climate-change language.
+The coursework reports **BERTopic `c_v` coherence = 0.7768**, the highest of the three source-reported diagnostics. The notebook contains **53 BERTopic topics (0–52)** ranging from broad institutional/development language to narrower country-specific clusters such as Liberia, Somalia, Angola, Madagascar and others, including a climate-change topic.
 
-The executed notebook contains **53 BERTopic topics (0–52)**. All source topic-word outputs are now preserved in [`../../results/smwa_bertopic_topics.csv`](../../results/smwa_bertopic_topics.csv).
+All source topic-word outputs are preserved in [`../../results/smwa_bertopic_topics.csv`](../../results/smwa_bertopic_topics.csv).
 
-### Interpretation
+### Interpretation caveat
 
-The submitted paper interprets BERTopic as producing the most semantically coherent topics. The professional audit preserves that conclusion as a coursework finding but adds two qualifications:
-
-1. coherence was not calculated against an identical reference construction for all three models;
-2. BERTopic generated many more/narrower topics, including generic and country-specific clusters, so a higher coherence score does not by itself establish that it is substantively superior.
+The submitted paper interprets BERTopic as producing the most semantically coherent topics, but the professional audit retains two qualifications: the coherence reference construction is not identical across the three model sections, and BERTopic generates many more/narrower topics. Therefore the higher number is retained as a coursework diagnostic rather than treated as conclusive model superiority.
 
 ---
 
 ## 7. Model comparison
 
-| Model | Representation | Coursework `c_v` | What it contributes here |
+| Model | Representation | Coursework `c_v` | Contribution |
 |---|---|---:|---|
 | LDA | probabilistic bag-of-words | **0.3663** | mixed topic prevalence and broad thematic structure |
 | NMF | TF-IDF matrix factorization | **0.5464** | clear additive term factors and geographic themes |
 | BERTopic | transformer embeddings + clustering | **0.7768** | contextual semantic clusters with finer granularity |
 
-The agreement across methods around **conflict, development, rights, colonial history, health and regional geopolitics** is more substantively informative than treating coherence alone as a winner-takes-all score.
+The recurring themes across methods — **conflict, development, rights, colonial history, health and regional geopolitics** — are more substantively useful than interpreting coherence as a winner-takes-all score.
 
 ---
 
 ## 8. Country-mention network
 
-The source folder contains `network_plot.png`. The submitted paper highlights **Madagascar, Namibia, Comoros and Somalia**, while South Sudan appears comparatively isolated and East/West African groupings are discussed.
+The final source folder contains `network_plot.png`. The submitted paper highlights **Madagascar, Namibia, Comoros and Somalia**, while South Sudan appears comparatively isolated and East/West African groupings are discussed.
 
-The original network code searches speech text for ISO3 country codes, which is fragile. The professional reconstruction uses country names and historical/orthographic aliases instead, so the reconstructed ranking is intentionally kept separate from the submitted network.
-
-The network is descriptive: mention strength is **not** causal diplomatic influence or formal alliance strength.
+The original network code searches text for ISO3 country codes, which is fragile. The professional reconstruction uses country names and historical/orthographic aliases instead, so reconstructed rankings are intentionally kept separate from the submitted network. Mention strength is descriptive and should not be read as causal diplomatic influence or formal alliance strength.
 
 ---
 
-## Complete source-graph accounting
+## Complete SMWA source-graph accounting
 
-The final SMWA `Graphs` folder contains:
+The final SMWA `Graphs` folder contains **21 analytical image files**:
 
 - 4 EDA/overall-word-cloud plots;
 - 4 sentiment plots/word clouds;
@@ -175,6 +141,6 @@ The final SMWA `Graphs` folder contains:
 - 10 NMF topic word clouds;
 - 1 network plot.
 
-That is **21 analytical image files in total**. BERTopic is represented through notebook topic outputs rather than an additional static PNG.
+BERTopic is represented through notebook topic outputs rather than an additional static figure.
 
 For the exact filename list, see [`../FIGURE_INDEX.md`](../FIGURE_INDEX.md). The professional reconstruction is organized in [`../../notebooks/01_africa_ungd_nlp.ipynb`](../../notebooks/01_africa_ungd_nlp.ipynb), [`../../notebooks/03_africa_network_extension.ipynb`](../../notebooks/03_africa_network_extension.ipynb), and the reusable modules under [`../../src/`](../../src/).
