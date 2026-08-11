@@ -22,3 +22,5 @@ jobs:
         run: python -m compileall -q src
       - name: Run tests
         run: pytest -q
+      - name: Audit image assets
+        run: python scripts/audit_image_assets.py
