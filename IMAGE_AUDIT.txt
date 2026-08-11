@@ -4,9 +4,9 @@ OK       coursework/ai_course/figures/figure-sheet-03.jpg (15,008 bytes)
 OK       coursework/ai_course/figures/figure-sheet-04.jpg (13,244 bytes)
 OK       coursework/ai_course/figures/figure-sheet-05.jpg (14,864 bytes)
 OK       coursework/social_media_web_analytics/figures/figure-sheet-01.jpg (14,932 bytes)
-OK       figures/professional/smwa_lda_topic_shares.svg (3,203 bytes)
-OK       figures/professional/smwa_nmf_topic_map.svg (4,491 bytes)
 OK       figures/professional/ai_regional_vocabulary_summary.svg (2,271 bytes)
 OK       figures/professional/ai_sentiment_vocabulary_summary.svg (3,453 bytes)
+OK       figures/professional/smwa_lda_topic_shares.svg (3,203 bytes)
+OK       figures/professional/smwa_nmf_topic_map.svg (4,491 bytes)
 
 Audited 10 referenced image assets; failures=0
