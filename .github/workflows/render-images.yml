@@ -24,7 +24,7 @@ jobs:
           python-version: '3.11'
       - name: Install image dependencies
         run: pip install pillow cairosvg
-      - name: Generate PNG fallbacks and update markdown
+      - name: Generate PNG figures and update markdown
         run: python scripts/build_rendered_images.py
       - name: Validate rendered images
         run: |
@@ -32,7 +32,7 @@ jobs:
           from pathlib import Path
           from PIL import Image
           paths = sorted(Path('figures/rendered').glob('*.png'))
-          assert len(paths) == 18, f'Expected 18 PNGs, got {len(paths)}'
+          assert len(paths) == 12, f'Expected 12 PNGs, got {len(paths)}'
           for p in paths:
               with Image.open(p) as im:
                   im.verify()
@@ -47,5 +47,5 @@ jobs:
             echo "No rendered-image changes to commit"
             exit 0
           fi
-          git commit -m "Use PNG fallbacks for reliable graph rendering"
+          git commit -m "Use reliable PNG figures across project pages"
           git push origin HEAD:main
