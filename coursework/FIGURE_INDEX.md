@@ -1,14 +1,16 @@
 # Complete coursework figure index
 
-This index separates the analytical outputs from the two original submissions and, after a second Google Drive audit, also inventories the **individual source image files kept in the final project `Graphs` folders**. Decorative university/UN logos and stock photographs are excluded.
+This index separates the analytical outputs from the two original submissions and inventories the **individual source image files kept in the final project `Graphs` folders**. Decorative university/UN logos and stock photographs are excluded.
 
-> **Important distinction:** the submitted papers contain a selected subset of figures. The source `Graphs` folders contain additional diagnostics and topic visualizations. The GitHub galleries now describe both rather than treating the PDF-embedded set as the whole analysis.
+> **Source vs live display.** The original coursework contains **43 analytical source images: 22 from the AI Africa–Europe project and 21 from the SMWA Africa extension**. Some historical raster assets imported during the first GitHub rebuild did not decode reliably in GitHub. The portfolio therefore preserves the source filenames/provenance here while the README and visual galleries use **12 validated PNG figures under `figures/rendered/`**, generated from clean repository sources and verified by Pillow in GitHub Actions.
+
+The submitted papers contain only a selected subset of the source figures; the final `Graphs` folders include additional diagnostics, sentiment outputs and topic visualizations.
 
 ---
 
 # Part I — AI course foundation: Africa vs Europe
 
-The final Africa-Europe `Graphs` folder contains **22 analytical PNG files**.
+The final Africa–Europe `Graphs` folder contains **22 analytical PNG files**.
 
 | # | Source filename | Analysis |
 |---:|---|---|
@@ -27,17 +29,17 @@ The final Africa-Europe `Graphs` folder contains **22 analytical PNG files**.
 | 13 | `word_cloud_cluster_0.png` | Cluster 0 vocabulary |
 | 14 | `word_cloud_cluster_1.png` | Cluster 1 vocabulary |
 | 15 | `word_cloud_cluster_2.png` | Cluster 2 vocabulary |
-| 16 | `confusion_matrix_lstm.png` | LSTM Africa-Europe classification confusion matrix |
-| 17 | `sentiment_distribution_comparison.png` | Africa-Europe VADER sentiment distribution |
-| 18 | `sentiment_trends_over_time.png` | Africa-Europe sentiment trend by year |
+| 16 | `confusion_matrix_lstm.png` | LSTM Africa–Europe classification confusion matrix |
+| 17 | `sentiment_distribution_comparison.png` | Africa–Europe VADER sentiment distribution |
+| 18 | `sentiment_trends_over_time.png` | Africa–Europe sentiment trend by year |
 | 19 | `positive_africa.png` | strongly positive sentence vocabulary — Africa |
 | 20 | `negative_africa.png` | strongly negative sentence vocabulary — Africa |
 | 21 | `positive_europe.png` | strongly positive sentence vocabulary — Europe |
 | 22 | `negative_europe.png` | strongly negative sentence vocabulary — Europe |
 
-The submitted AI PDF also reports the TF-IDF cosine output and LSTM classification metrics in text/table form. The `0.2640` cosine number is now correctly documented as `cosine_sim[0][0]` rather than a corpus-level mean.
+The submitted AI PDF also reports the TF-IDF cosine output and LSTM classification metrics in text/table form. The `0.2640` cosine number is documented as `cosine_sim[0][0]` rather than a corpus-level mean.
 
-The complete original visual sequence is grouped into five high-resolution archival sheets under [`ai_course/figures/`](ai_course/figures/) and explained in [`ai_course/figures.md`](ai_course/figures.md).
+The live AI gallery is [`ai_course/figures.md`](ai_course/figures.md). It uses validated PNGs for regional vocabulary, TF-IDF diagnostics, LDA, K-means, LSTM and sentiment interpretation while retaining this list as the source-level provenance record.
 
 ---
 
@@ -85,7 +87,9 @@ The final SMWA source folder is richer than the submitted PDF and contains **21 
 
 ### BERTopic output
 
-The final Graphs folder does **not** contain a separate static BERTopic PNG. BERTopic results are stored in the notebook output as topic-word lists / topic information and are summarized in the paper through the model-comparison discussion and coherence value. The GitHub documentation therefore explains BERTopic from the actual source output rather than inventing a missing source plot.
+The final `Graphs` folder does **not** contain a separate static BERTopic PNG. BERTopic results are stored in notebook output as topic-word lists/topic information. The GitHub documentation therefore summarizes BERTopic from the executed source output rather than inventing a missing plot.
+
+The live SMWA gallery is [`social_media_web_analytics/figures.md`](social_media_web_analytics/figures.md), with validated PNG summaries for LDA, NMF, coherence and the professional network reconstruction plus source-level interpretation of the word-cloud and sentiment outputs.
 
 ---
 
@@ -97,6 +101,6 @@ The final Graphs folder does **not** contain a separate static BERTopic PNG. BER
 | NMF | **0.5464** |
 | BERTopic | **0.7768** |
 
-The submitted paper interprets BERTopic as the strongest model on these values. The professional methodology/QA notes explain why they should be treated as **coursework-reported diagnostics rather than a fully harmonized benchmark**: the three original model sections do not construct their coherence reference corpora identically.
+The submitted paper interprets BERTopic as strongest on these values. The professional methodology/QA notes explain why they should be treated as **coursework-reported diagnostics rather than a fully harmonized benchmark**: the three original model sections do not construct their coherence reference corpora identically.
 
 For model mechanics, exact source topics and substantive interpretation, see [`../docs/models_and_interpretation.md`](../docs/models_and_interpretation.md).
