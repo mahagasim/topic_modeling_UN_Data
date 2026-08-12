@@ -9,7 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "figures" / "rendered"
 OUT.mkdir(parents=True, exist_ok=True)
 
-# Professional SVG figures used on the README/galleries.
+# Portfolio-facing figures are generated only from valid SVG sources.
+# The historical coursework JPEG sheets are retained as provenance but are
+# deliberately excluded from the live rendering path because they are not
+# reliably decodable by standard image libraries.
 SVG_FILES = [
     "sample_composition",
     "ai_similarity_diagnostics",
@@ -30,51 +33,28 @@ for stem in SVG_FILES:
     dst = OUT / f"{stem}.png"
     if not src.exists():
         raise FileNotFoundError(src)
-    cairosvg.svg2png(url=str(src), write_to=str(dst), output_width=1400)
+    cairosvg.svg2png(url=str(src), write_to=str(dst), output_width=1600)
 
-# Original coursework sheets: convert to PNG so the README does not depend
-# on the older binary/JPEG rendering path.
-for i in range(1, 6):
-    src = ROOT / "coursework" / "ai_course" / "figures" / f"figure-sheet-{i:02d}.jpg"
-    dst = OUT / f"ai_course_sheet_{i:02d}.png"
-    if not src.exists():
-        raise FileNotFoundError(src)
-    with Image.open(src) as im:
-        im.convert("RGB").save(dst, format="PNG", optimize=True)
-
-src = ROOT / "coursework" / "social_media_web_analytics" / "figures" / "figure-sheet-01.jpg"
-dst = OUT / "smwa_sheet_01.png"
-if not src.exists():
-    raise FileNotFoundError(src)
-with Image.open(src) as im:
-    im.convert("RGB").save(dst, format="PNG", optimize=True)
-
-# Replace README/gallery references with the PNG fallbacks using standard
-# Markdown-friendly relative paths.
+# Rewrite the portfolio-facing Markdown so it never relies on the historical
+# JPEG sheets or inline SVG rendering.
 replacements = {
     "README.md": {
-        "figures/professional/": "figures/rendered/",
-        ".svg\"": ".png\"",
-        "coursework/ai_course/figures/figure-sheet-01.jpg": "figures/rendered/ai_course_sheet_01.png",
-        "coursework/ai_course/figures/figure-sheet-02.jpg": "figures/rendered/ai_course_sheet_02.png",
-        "coursework/ai_course/figures/figure-sheet-03.jpg": "figures/rendered/ai_course_sheet_03.png",
-        "coursework/ai_course/figures/figure-sheet-04.jpg": "figures/rendered/ai_course_sheet_04.png",
-        "coursework/ai_course/figures/figure-sheet-05.jpg": "figures/rendered/ai_course_sheet_05.png",
-        "coursework/social_media_web_analytics/figures/figure-sheet-01.jpg": "figures/rendered/smwa_sheet_01.png",
+        "coursework/ai_course/figures/figure-sheet-01.jpg": "figures/rendered/ai_regional_vocabulary_summary.png",
+        "coursework/ai_course/figures/figure-sheet-02.jpg": "figures/rendered/ai_lda_topic_prevalence.png",
+        "coursework/ai_course/figures/figure-sheet-03.jpg": "figures/rendered/ai_kmeans_by_continent.png",
+        "coursework/ai_course/figures/figure-sheet-04.jpg": "figures/rendered/ai_lstm_confusion_matrix.png",
+        "coursework/ai_course/figures/figure-sheet-05.jpg": "figures/rendered/ai_sentiment_vocabulary_summary.png",
+        "coursework/social_media_web_analytics/figures/figure-sheet-01.jpg": "figures/rendered/smwa_lda_topic_shares.png",
     },
     "coursework/ai_course/figures.md": {
-        "figures/figure-sheet-01.jpg": "../../figures/rendered/ai_course_sheet_01.png",
-        "figures/figure-sheet-02.jpg": "../../figures/rendered/ai_course_sheet_02.png",
-        "figures/figure-sheet-03.jpg": "../../figures/rendered/ai_course_sheet_03.png",
-        "figures/figure-sheet-04.jpg": "../../figures/rendered/ai_course_sheet_04.png",
-        "figures/figure-sheet-05.jpg": "../../figures/rendered/ai_course_sheet_05.png",
-        "../../figures/professional/": "../../figures/rendered/",
-        ".svg)": ".png)",
+        "figures/figure-sheet-01.jpg": "../../figures/rendered/ai_regional_vocabulary_summary.png",
+        "figures/figure-sheet-02.jpg": "../../figures/rendered/ai_lda_topic_prevalence.png",
+        "figures/figure-sheet-03.jpg": "../../figures/rendered/ai_kmeans_by_continent.png",
+        "figures/figure-sheet-04.jpg": "../../figures/rendered/ai_lstm_confusion_matrix.png",
+        "figures/figure-sheet-05.jpg": "../../figures/rendered/ai_sentiment_vocabulary_summary.png",
     },
     "coursework/social_media_web_analytics/figures.md": {
-        "figures/figure-sheet-01.jpg": "../../figures/rendered/smwa_sheet_01.png",
-        "../../figures/professional/": "../../figures/rendered/",
-        ".svg)": ".png)",
+        "figures/figure-sheet-01.jpg": "../../figures/rendered/smwa_lda_topic_shares.png",
     },
 }
 
@@ -85,12 +65,16 @@ for rel, mapping in replacements.items():
         text = text.replace(old, new)
     path.write_text(text, encoding="utf-8")
 
-# Verify every rendered file is a valid PNG with non-trivial dimensions.
-for path in sorted(OUT.glob("*.png")):
+# Verify every rendered file is a genuine PNG with useful dimensions.
+paths = sorted(OUT.glob("*.png"))
+if len(paths) != len(SVG_FILES):
+    raise RuntimeError(f"Expected {len(SVG_FILES)} PNGs, found {len(paths)}")
+
+for path in paths:
     with Image.open(path) as im:
         im.verify()
     with Image.open(path) as im:
-        if im.width < 300 or im.height < 150:
+        if im.width < 600 or im.height < 250:
             raise RuntimeError(f"Unexpectedly small rendered image: {path} {im.size}")
 
-print(f"Generated and verified {len(list(OUT.glob('*.png')))} PNG fallbacks in {OUT}")
+print(f"Generated and verified {len(paths)} PNG figures in {OUT}")
