@@ -2,7 +2,7 @@ name: Render PNG figures
 
 on:
   push:
-    branches: [fix-graph-rendering]
+    branches: [main]
     paths:
       - scripts/build_rendered_images.py
       - .github/workflows/render-images.yml
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: fix-graph-rendering
+          ref: main
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -48,4 +48,4 @@ jobs:
             exit 0
           fi
           git commit -m "Use PNG fallbacks for reliable graph rendering"
-          git push origin HEAD:fix-graph-rendering
+          git push origin HEAD:main
