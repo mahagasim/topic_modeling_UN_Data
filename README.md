@@ -2,12 +2,12 @@
 
 **Africa–Europe comparison with an Africa-focused topic-modeling and network-analysis extension**
 
-This repository combines two master's coursework projects that use the **United Nations General Debate Corpus (UNGDC)** as one research progression:
+This repository combines two master's coursework projects using the **United Nations General Debate Corpus (UNGDC)** into one research progression:
 
-1. **AI course foundation — Africa vs Europe:** EDA, word clouds, TF-IDF/cosine similarity, LDA, K-means, LSTM classification and VADER sentiment.
-2. **Social Media & Web Analytics extension — Africa:** deeper EDA, sentiment over time, LDA/NMF/BERTopic and country-mention network analysis.
+1. **AI course foundation — Africa vs Europe:** EDA, regional vocabulary, TF-IDF/cosine similarity, LDA, K-means, LSTM classification and VADER sentiment.
+2. **Social Media & Web Analytics extension — Africa:** deeper EDA, sentiment analysis, LDA/NMF/BERTopic and country-mention network analysis.
 
-> **Provenance:** original coursework outputs are kept separate from the professional reconstruction. Methodological corrections are documented rather than silently replacing submitted results.
+> **Provenance:** coursework-reported results are kept distinct from professional reconstructions and methodological corrections. The live portfolio figures below are validated PNG renderings generated from clean repository sources so they display reliably on GitHub.
 
 For the full technical discussion, see **[Models, measurement and interpretation](docs/models_and_interpretation.md)** and **[QA audit](docs/qa.md)**.
 
@@ -15,99 +15,124 @@ For the full technical discussion, see **[Models, measurement and interpretation
 
 ## Visual results
 
-The front page intentionally uses **ordinary JPEG/Markdown image embeds only**. This avoids the SVG/HTML rendering issue that affected the earlier version of the README.
+### Data and sample composition
 
-### AI course — Africa vs Europe
+![UNGD sample composition](figures/rendered/sample_composition.png)
 
-#### 1. Corpus diagnostics and Africa/Europe word clouds
+The computational snapshot contains **7,507 speeches (1970–2015)**. The Africa-focused sample contains **2,159 speeches**, while the saved Africa–Europe comparative sample contains **3,826 speeches: 2,159 from Africa and 1,667 from Europe**.
 
-![AI course — EDA and Africa/Europe word clouds](figures/rendered/ai_regional_vocabulary_summary.png)
+---
 
-**Interpretation.** Both regions use a strong common UN diplomatic vocabulary. The Africa corpus gives relatively greater prominence to development, Africa/South Africa and regional language, while the Europe corpus contains relatively more human-rights, European and Cold-War/geopolitical vocabulary. Word clouds are exploratory frequency displays, not statistical tests.
+## Part I — AI course foundation: Africa vs Europe
 
-#### 2. TF-IDF similarity and joint LDA topic comparison
+### 1. Regional vocabulary
 
-![AI course — TF-IDF and LDA](figures/rendered/ai_lda_topic_prevalence.png)
+![Africa-Europe vocabulary summary](figures/rendered/ai_regional_vocabulary_summary.png)
 
-The source notebook computes a Europe×Africa TF-IDF cosine-similarity matrix. The originally reported **0.2640** value is `cosine_sim[0][0]`: one Europe–Africa speech pair, not a regional average. The professional audit therefore distinguishes:
+Both regions share a strong institutional UN vocabulary. African statements give relatively greater prominence to **development, Africa/South Africa and developing-country language**, while European statements place relatively more emphasis on **human rights, Europe and Cold-War/geopolitical vocabulary**. These frequency-based summaries are exploratory rather than formal tests of policy priorities.
+
+### 2. TF-IDF similarity
+
+![TF-IDF similarity diagnostics](figures/rendered/ai_similarity_diagnostics.png)
+
+The original notebook computes a Europe×Africa TF-IDF cosine-similarity matrix. The reported **0.2640** value is `cosine_sim[0][0]`—one Europe–Africa speech pair—not a regional average. The professional audit therefore distinguishes:
 
 | Similarity estimand | Value | Meaning |
 |---|---:|---|
 | Coursework first speech pair | **0.264** | one Europe–Africa pair |
-| Sampled cross-region pairwise mean | **~0.188** | mean over a deterministic 300×300 sample |
+| Sampled cross-region pairwise mean | **~0.188** | deterministic 300×300 cross-region sample |
 | Regional TF-IDF centroid cosine | **~0.906** | similarity between average regional TF-IDF vectors |
 
-The joint **10-topic LDA** comparison shows strong regional differences. Colonial/apartheid and African conflict/development topics are Africa-heavy; Kosovo/Balkan, terrorism and Cold-War/European topics are Europe-heavy. Exact topic words and prevalence values are in [`results/ai_lda_topics_and_prevalence.csv`](results/ai_lda_topics_and_prevalence.csv).
+The contrast between the lower pairwise mean and high centroid similarity suggests that individual speeches differ substantially while the two regions still share a large common diplomatic vocabulary.
 
-#### 3. K-means clustering
+### 3. Joint LDA topic model
 
-![AI course — K-means diagnostics and cluster outputs](figures/rendered/ai_kmeans_by_continent.png)
+![Joint LDA topic prevalence](figures/rendered/ai_lda_topic_prevalence.png)
 
-The source workflow uses TF-IDF vectors and an elbow diagnostic, selecting **k = 3**. In the audited saved-data snapshot:
+The joint **10-topic LDA** model reveals clear regional differences. Africa-heavy themes include **colonialism/apartheid, African conflicts and development/health/MDGs**. Europe-heavy themes include **Kosovo/Balkan politics, terrorism, Soviet/détente language and European geopolitical issues**.
+
+Exact topic words and prevalence values are in [`results/ai_lda_topics_and_prevalence.csv`](results/ai_lda_topics_and_prevalence.csv).
+
+### 4. K-means clustering
+
+![K-means cluster composition by continent](figures/rendered/ai_kmeans_by_continent.png)
+
+The source workflow uses TF-IDF vectors and selects **k = 3** after an elbow diagnostic. In the audited saved-data snapshot:
 
 | Continent | Cluster 0 | Cluster 1 | Cluster 2 |
 |---|---:|---:|---:|
 | Africa | **1,194** | 51 | **914** |
 | Europe | 8 | **1,140** | **519** |
 
-The clusters broadly separate development/security-heavy African discourse, governance/rights-heavy European discourse, and a mixed economic/international-relations cluster. They should not be interpreted as ideological camps.
+The clusters broadly separate a development/security-heavy African grouping, a governance/rights-heavy European grouping and a mixed economic/international-relations grouping. They should not be interpreted as ideological camps.
 
-#### 4. LSTM classification and sentiment trends
+### 5. LSTM continent classification
 
-![AI course — LSTM and sentiment analysis](figures/rendered/ai_lstm_confusion_matrix.png)
+![LSTM confusion matrix](figures/rendered/ai_lstm_confusion_matrix.png)
 
-The submitted LSTM uses an 80/20 split, a 10,000-word tokenizer vocabulary, sequence length 100, 100-dimensional embeddings and an LSTM(128). **Coursework-reported held-out accuracy: 85.1%.** Europe has precision/recall/F1 of approximately **0.86/0.90/0.88**, while Africa has **0.84/0.78/0.81**. The training history also indicates overfitting because training accuracy approaches 100% while validation accuracy remains around the mid-80s.
+![LSTM training history](figures/rendered/ai_lstm_training_history.png)
 
-The VADER sentiment plots show substantial year-to-year variation. The submitted interpretation emphasizes relatively negative African sentiment in parts of the 1970s through the mid-1980s, followed by improvement and continued fluctuation.
+The submitted LSTM uses an 80/20 split, a 10,000-word tokenizer vocabulary, sequence length 100, 100-dimensional embeddings and an LSTM(128). **Coursework-reported held-out accuracy: 85.1%.** Europe has precision/recall/F1 of approximately **0.86/0.90/0.88**, while Africa has **0.84/0.78/0.81**.
 
-#### 5. Positive/negative sentiment word clouds
+The training history shows clear overfitting: training accuracy approaches 100% while validation accuracy remains around the mid-80s. The result therefore demonstrates substantial regional signal in the text, but not perfect or necessarily generalizable separation.
 
-![AI course — sentiment-specific word clouds](figures/rendered/ai_sentiment_vocabulary_summary.png)
+### 6. Sentiment vocabulary
 
-Across both regions, **positive** passages emphasize terms such as *peace, security, justice, freedom, cooperation, support* and *United Nations*. **Negative** passages emphasize *war, terrorism, violence, conflict, weapons, destruction, poverty* and *crisis*.
+![Africa-Europe sentiment vocabulary](figures/rendered/ai_sentiment_vocabulary_summary.png)
 
-The professional sentiment implementation scores sentence-like units from the **original speech text** and aggregates to the speech level. This corrects a unit-of-analysis inconsistency found in one of the coursework sentiment paths.
+Across both regions, **positive** passages emphasize *peace, security, justice, freedom, cooperation, support* and *United Nations*. **Negative** passages emphasize *war, terrorism, violence, conflict, weapons, destruction, poverty* and *crisis*.
 
-**Full AI visual gallery:** [`coursework/ai_course/figures.md`](coursework/ai_course/figures.md)
+The original coursework also contains VADER sentiment-distribution and sentiment-over-time plots. The submitted interpretation emphasizes relatively more negative African sentiment in parts of the 1970s through the mid-1980s, followed by improvement and continued fluctuation. The professional sentiment implementation corrects a source unit-of-analysis inconsistency by scoring sentence-like units from the original speech text before aggregation.
+
+**Detailed AI visual analysis:** [`coursework/ai_course/figures.md`](coursework/ai_course/figures.md)
 
 ---
 
-### Social Media & Web Analytics — Africa extension
+## Part II — Social Media & Web Analytics extension: Africa
 
-![SMWA — submitted analytical figures](figures/rendered/smwa_lda_topic_shares.png)
+The SMWA extension narrows the analysis to **2,159 African statements** and deepens the topic-model, sentiment and network components.
 
-The SMWA extension narrows the sample to **2,159 African statements** and adds:
+### 1. LDA topic distribution
 
-- Africa corpus diagnostics and an overall Africa word cloud;
-- VADER sentiment distribution and sentiment over time;
-- positive and negative sentiment word clouds;
-- LDA, NMF and BERTopic;
-- topic-coherence diagnostics;
-- a directed country-mention network.
+![SMWA LDA topic shares](figures/rendered/smwa_lda_topic_shares.png)
 
-The final Drive `Graphs` folder contains **21 individual analytical PNGs**. These include `sentiment_distribution.png`, `LDA_topic_distribution.png`, `topic_distribution_heatmap.png`, **ten NMF topic word clouds (`topic_0.png`–`topic_9.png`)**, and `network_plot.png`. The submitted-paper sheet above preserves the figures embedded in the paper; the complete source inventory is documented in [`coursework/FIGURE_INDEX.md`](coursework/FIGURE_INDEX.md).
+The coursework reports **LDA `c_v` coherence = 0.3663**. Under this specification, colonial/apartheid-related discourse and development/recovery language account for a large share of fitted topic mass, with conflict, MDGs and country/region-specific issues forming additional components.
 
-#### Topic-model results
+### 2. NMF topic map
+
+![SMWA NMF topic map](figures/rendered/smwa_nmf_topic_map.png)
+
+The **10-topic NMF** solution produces relatively interpretable factors around Southern Africa/apartheid, sustainable development and MDGs, human rights, North Africa/Maghreb politics, the Horn of Africa, independence struggles, health/food security, Darfur and Great Lakes conflict.
+
+### 3. Topic-model comparison
+
+![Topic-model coherence comparison](figures/rendered/smwa_topic_coherence.png)
 
 | Model | Coursework-reported `c_v` coherence | Main source interpretation |
 |---|---:|---|
-| LDA | **0.3663** | regional conflict, colonial/apartheid history, development and health |
-| NMF | **0.5464** | apartheid, sustainable development/MDGs, human rights and country-specific topics |
-| BERTopic | **0.7768** | broader contextual and country-specific themes |
+| LDA | **0.3663** | broad mixed topic structure |
+| NMF | **0.5464** | clearer additive term factors and geographic themes |
+| BERTopic | **0.7768** | finer contextual and country-specific clusters |
 
-The executed notebook contains **10 LDA topics, 10 NMF topics and 53 BERTopic topics (0–52)**. They are preserved as machine-readable outputs:
+The three values are retained as coursework diagnostics, **not as a perfectly harmonized benchmark**, because the coherence reference construction differs across model sections. The executed notebook contains **10 LDA topics, 10 NMF topics and 53 BERTopic topics (0–52)**.
 
 - [`results/smwa_lda_topics.csv`](results/smwa_lda_topics.csv)
 - [`results/smwa_nmf_topics.csv`](results/smwa_nmf_topics.csv)
 - [`results/smwa_bertopic_topics.csv`](results/smwa_bertopic_topics.csv)
 
-The original coherence numbers are retained as coursework diagnostics, but they are **not a perfectly harmonized apples-to-apples benchmark** because the reference-corpus construction differs across model sections.
+### 4. Country-mention network
 
-#### Network analysis
+![Professional country-mention network ranking](figures/rendered/smwa_network_top_mentions.png)
 
-The submitted paper describes Madagascar, Namibia, Comoros and Somalia as prominent and South Sudan as relatively isolated. The original source code searches speech text for ISO3 country codes. The professional reconstruction instead matches country names and historical/orthographic aliases, counting a target at most once per speech. Because the measurement rule changes, the two networks are intentionally not expected to produce identical rankings.
+The submitted paper highlights **Madagascar, Namibia, Comoros and Somalia**, while South Sudan appears comparatively isolated. The original code searches speech text for ISO3 country codes, which is fragile. The professional reconstruction instead matches country names and historical/orthographic aliases, counting a target at most once per speech. Because the measurement rule changes, the two network rankings are intentionally kept separate.
 
-**Full SMWA visual gallery:** [`coursework/social_media_web_analytics/figures.md`](coursework/social_media_web_analytics/figures.md)
+The network is descriptive: mention strength is not causal diplomatic influence or formal alliance strength.
+
+### 5. Source sentiment and word-cloud outputs
+
+The final SMWA source `Graphs` folder contains an **overall Africa word cloud, sentiment distribution, sentiment trend, positive and negative word clouds, LDA distribution, NMF heatmap, ten NMF topic word clouds and the network plot**. Their complete filename-level provenance is recorded in [`coursework/FIGURE_INDEX.md`](coursework/FIGURE_INDEX.md). The live GitHub page uses the validated PNG summaries above to avoid the broken raster encoding that affected the earlier archive sheets.
+
+**Detailed SMWA visual analysis:** [`coursework/social_media_web_analytics/figures.md`](coursework/social_media_web_analytics/figures.md)
 
 ---
 
@@ -175,7 +200,9 @@ pip install -r requirements-ai.txt
 
 ## QA and methodological boundary
 
-The repository includes core unit tests and GitHub Actions CI. The final analytical rebuild passed the core test suite. BERTopic and TensorFlow/LSTM are heavy optional paths; their submitted numerical outputs are retained as **coursework-reported** unless independently rerun.
+The repository includes core unit tests, image-asset validation and GitHub Actions CI. Portfolio-facing figures are regenerated as standard PNGs from clean repository sources and validated before being committed.
+
+BERTopic and TensorFlow/LSTM are heavy optional paths; their submitted numerical outputs are retained as **coursework-reported** unless independently rerun.
 
 This is a **descriptive NLP and machine-learning project**. Cosine similarity, topic prevalence, clustering, classifier accuracy, sentiment and network centrality are text-derived measurements. They do not identify causal effects and should not be interpreted as evidence of homogeneous political preferences within Africa or Europe.
 
