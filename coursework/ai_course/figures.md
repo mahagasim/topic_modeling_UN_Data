@@ -8,9 +8,9 @@ For the filename-level source inventory, see [`../FIGURE_INDEX.md`](../FIGURE_IN
 
 ## 1. Corpus diagnostics and regional word clouds
 
-![AI course: corpus diagnostics and Africa-Europe word clouds](figures/figure-sheet-01.jpg)
+![AI course: corpus diagnostics and Africa-Europe word clouds](../../figures/rendered/ai_regional_vocabulary_summary.png)
 
-**Open at full resolution:** [`figure-sheet-01.jpg`](figures/figure-sheet-01.jpg)
+**Open at full resolution:** [`figure-sheet-01.jpg`](../../figures/rendered/ai_regional_vocabulary_summary.png)
 
 This sheet covers the Africa/Europe session distributions, country participation, speech-length diagnostics and the two **overall regional word clouds**.
 
@@ -24,9 +24,9 @@ The key comparison is relative prominence rather than mere word presence. Word c
 
 ## 2. TF-IDF similarity and LDA topic comparison
 
-![AI course: text similarity and LDA topic comparison](figures/figure-sheet-02.jpg)
+![AI course: text similarity and LDA topic comparison](../../figures/rendered/ai_lda_topic_prevalence.png)
 
-**Open at full resolution:** [`figure-sheet-02.jpg`](figures/figure-sheet-02.jpg)
+**Open at full resolution:** [`figure-sheet-02.jpg`](../../figures/rendered/ai_lda_topic_prevalence.png)
 
 The source notebook computes TF-IDF representations and a Europe×Africa cosine-similarity matrix. A QA finding is that the submitted **0.2640** scalar is `cosine_sim[0][0]` — one Europe–Africa speech pair, not a regional-corpus average. The professional audit therefore separates it from the sampled pairwise mean (~0.188) and regional centroid cosine (~0.906).
 
@@ -41,9 +41,9 @@ Full topic terms and prevalence values are stored in [`../../results/ai_lda_topi
 
 ## 3. K-means diagnostics and cluster structure
 
-![AI course: K-means elbow, cluster distribution and heatmap](figures/figure-sheet-03.jpg)
+![AI course: K-means elbow, cluster distribution and heatmap](../../figures/rendered/ai_kmeans_by_continent.png)
 
-**Open at full resolution:** [`figure-sheet-03.jpg`](figures/figure-sheet-03.jpg)
+**Open at full resolution:** [`figure-sheet-03.jpg`](../../figures/rendered/ai_kmeans_by_continent.png)
 
 The elbow diagnostic motivates **three clusters**. In the audited saved-data snapshot:
 
@@ -58,9 +58,9 @@ Source top terms suggest a development/security-heavy cluster, a governance/righ
 
 ## 4. LSTM classification and sentiment distribution/trends
 
-![AI course: LSTM classification and VADER sentiment comparison](figures/figure-sheet-04.jpg)
+![AI course: LSTM classification and VADER sentiment comparison](../../figures/rendered/ai_lstm_confusion_matrix.png)
 
-**Open at full resolution:** [`figure-sheet-04.jpg`](figures/figure-sheet-04.jpg)
+**Open at full resolution:** [`figure-sheet-04.jpg`](../../figures/rendered/ai_lstm_confusion_matrix.png)
 
 This sheet includes the LSTM evaluation and the **Africa-Europe VADER sentiment distribution and sentiment-over-time graphs**.
 
@@ -78,9 +78,9 @@ The professional QA retains the original plot while documenting the unit-of-anal
 
 ## 5. Positive and negative sentiment word clouds
 
-![AI course: Africa-Europe positive and negative sentiment word clouds](figures/figure-sheet-05.jpg)
+![AI course: Africa-Europe positive and negative sentiment word clouds](../../figures/rendered/ai_sentiment_vocabulary_summary.png)
 
-**Open at full resolution:** [`figure-sheet-05.jpg`](figures/figure-sheet-05.jpg)
+**Open at full resolution:** [`figure-sheet-05.jpg`](../../figures/rendered/ai_sentiment_vocabulary_summary.png)
 
 This sheet contains the four original **sentiment-specific word clouds**.
 

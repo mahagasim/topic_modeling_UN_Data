@@ -8,9 +8,9 @@ The source folder contains **21 analytical image files** — substantially more 
 
 ## 1. Submitted-paper visual overview
 
-![SMWA analytical figure sheet](figures/figure-sheet-01.jpg)
+![SMWA analytical figure sheet](../../figures/rendered/smwa_lda_topic_shares.png)
 
-**Open at full resolution:** [`figure-sheet-01.jpg`](figures/figure-sheet-01.jpg)
+**Open at full resolution:** [`figure-sheet-01.jpg`](../../figures/rendered/smwa_lda_topic_shares.png)
 
 The submitted-paper visual set contains:
 

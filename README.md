@@ -21,13 +21,13 @@ The front page intentionally uses **ordinary JPEG/Markdown image embeds only**. 
 
 #### 1. Corpus diagnostics and Africa/Europe word clouds
 
-![AI course — EDA and Africa/Europe word clouds](coursework/ai_course/figures/figure-sheet-01.jpg)
+![AI course — EDA and Africa/Europe word clouds](figures/rendered/ai_regional_vocabulary_summary.png)
 
 **Interpretation.** Both regions use a strong common UN diplomatic vocabulary. The Africa corpus gives relatively greater prominence to development, Africa/South Africa and regional language, while the Europe corpus contains relatively more human-rights, European and Cold-War/geopolitical vocabulary. Word clouds are exploratory frequency displays, not statistical tests.
 
 #### 2. TF-IDF similarity and joint LDA topic comparison
 
-![AI course — TF-IDF and LDA](coursework/ai_course/figures/figure-sheet-02.jpg)
+![AI course — TF-IDF and LDA](figures/rendered/ai_lda_topic_prevalence.png)
 
 The source notebook computes a Europe×Africa TF-IDF cosine-similarity matrix. The originally reported **0.2640** value is `cosine_sim[0][0]`: one Europe–Africa speech pair, not a regional average. The professional audit therefore distinguishes:
 
@@ -41,7 +41,7 @@ The joint **10-topic LDA** comparison shows strong regional differences. Colonia
 
 #### 3. K-means clustering
 
-![AI course — K-means diagnostics and cluster outputs](coursework/ai_course/figures/figure-sheet-03.jpg)
+![AI course — K-means diagnostics and cluster outputs](figures/rendered/ai_kmeans_by_continent.png)
 
 The source workflow uses TF-IDF vectors and an elbow diagnostic, selecting **k = 3**. In the audited saved-data snapshot:
 
@@ -54,7 +54,7 @@ The clusters broadly separate development/security-heavy African discourse, gove
 
 #### 4. LSTM classification and sentiment trends
 
-![AI course — LSTM and sentiment analysis](coursework/ai_course/figures/figure-sheet-04.jpg)
+![AI course — LSTM and sentiment analysis](figures/rendered/ai_lstm_confusion_matrix.png)
 
 The submitted LSTM uses an 80/20 split, a 10,000-word tokenizer vocabulary, sequence length 100, 100-dimensional embeddings and an LSTM(128). **Coursework-reported held-out accuracy: 85.1%.** Europe has precision/recall/F1 of approximately **0.86/0.90/0.88**, while Africa has **0.84/0.78/0.81**. The training history also indicates overfitting because training accuracy approaches 100% while validation accuracy remains around the mid-80s.
 
@@ -62,7 +62,7 @@ The VADER sentiment plots show substantial year-to-year variation. The submitted
 
 #### 5. Positive/negative sentiment word clouds
 
-![AI course — sentiment-specific word clouds](coursework/ai_course/figures/figure-sheet-05.jpg)
+![AI course — sentiment-specific word clouds](figures/rendered/ai_sentiment_vocabulary_summary.png)
 
 Across both regions, **positive** passages emphasize terms such as *peace, security, justice, freedom, cooperation, support* and *United Nations*. **Negative** passages emphasize *war, terrorism, violence, conflict, weapons, destruction, poverty* and *crisis*.
 
@@ -74,7 +74,7 @@ The professional sentiment implementation scores sentence-like units from the **
 
 ### Social Media & Web Analytics — Africa extension
 
-![SMWA — submitted analytical figures](coursework/social_media_web_analytics/figures/figure-sheet-01.jpg)
+![SMWA — submitted analytical figures](figures/rendered/smwa_lda_topic_shares.png)
 
 The SMWA extension narrows the sample to **2,159 African statements** and adds:
 
