@@ -13,6 +13,24 @@ For the full technical discussion, see **[Models, measurement and interpretation
 
 ---
 
+## Key findings
+
+The computational snapshot contains **7,507 UN General Debate speeches (1970–2015)**. The main comparative sample contains **2,159 African speeches and 1,667 European speeches**.
+
+The joint LDA model reveals a clear thematic contrast: Africa-heavy topics emphasize **colonialism/apartheid, African conflicts, development, health and the MDGs**, while Europe-heavy topics emphasize **Balkan politics, terrorism, détente/Soviet-era language and European geopolitical issues**.
+
+![Joint LDA topic prevalence](figures/rendered/ai_lda_topic_prevalence.png)
+
+The coursework LSTM achieved **85.1% held-out continent-classification accuracy**, showing substantial regional signal in the text. However, the training history also shows clear overfitting, so the result is presented as predictive evidence rather than a claim of stable structural separation.
+
+In the Africa-focused extension, the coursework-reported `c_v` coherence diagnostics were **0.3663 for LDA**, **0.5464 for NMF** and **0.7768 for BERTopic**. These are useful within-project diagnostics but not a perfectly harmonized benchmark because the coherence reference construction differs across sections.
+
+![Topic-model coherence comparison](figures/rendered/smwa_topic_coherence.png)
+
+**Takeaway.** The project demonstrates a full text-analytics pipeline—from preprocessing and exploratory vocabulary analysis to topic modelling, clustering, neural classification, sentiment and network analysis—while explicitly separating descriptive text patterns from causal or political interpretations.
+
+---
+
 ## Visual results
 
 ### Data and sample composition
